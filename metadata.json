@@ -1,0 +1,6 @@
+{
+  "name": "AEGIS Zero-Trust Gateway & SOC",
+  "description": "Enterprise Zero-Trust security gateway and MSSP SOC platform providing continuous verification, identity-aware access, and automated containment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
