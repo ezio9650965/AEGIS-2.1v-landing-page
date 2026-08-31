@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { INSTALLATION_STEPS } from '../data';
-import { CheckCircle2, ArrowRight, ShieldCheck, Cpu, Terminal, Clock, Globe, KeyRound, Server, Activity, ChevronRight, Copy, Check } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Terminal, Clock, Globe, KeyRound, Server, Activity, Copy, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface InstallationStepsProps {
   onOpenDemoModal: () => void;
@@ -9,6 +9,8 @@ interface InstallationStepsProps {
 
 export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemoModal }) => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
+  const steps = t.installation.steps;
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [copiedCode, setCopiedCode] = useState(false);
 
@@ -23,7 +25,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
     }
   };
 
-  const activeStep = INSTALLATION_STEPS[activeStepIndex];
+  const activeStep = steps[activeStepIndex] || steps[0];
   const StepIcon = getStepIcon(activeStep.iconName);
 
   const copyToClipboard = (text: string) => {
@@ -51,24 +53,23 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
             }}
           >
             <Clock className="w-3.5 h-3.5" />
-            <span>DEPLOYMENT &amp; INTEGRATION GUIDE</span>
+            <span>{t.installation.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            Zero-Disruption Integration in 6 Phased Steps
+            {t.installation.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            AEGIS integrates incrementally without replacing your existing firewall hardware or disrupting business workflows. 
-            Follow the implementation blueprint from DNS cutover to continuous SOC containment.
+            {t.installation.subtitle}
           </p>
         </div>
 
         {/* Horizontal Stepper Selector */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {INSTALLATION_STEPS.map((step, idx) => {
+          {steps.map((step, idx) => {
             const isSelected = activeStepIndex === idx;
             const Icon = getStepIcon(step.iconName);
 
@@ -95,7 +96,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                       className="text-xs font-mono font-bold"
                       style={{ color: isSelected ? (theme === 'dark' ? '#38BDF8' : '#0369A1') : (theme === 'dark' ? '#64748B' : '#94A3B8') }}
                     >
-                      STEP {step.number}
+                      {t.installation.stepPrefix} {step.number}
                     </span>
                     <Icon className="w-4 h-4" 
                       style={{ color: isSelected ? (theme === 'dark' ? '#38BDF8' : '#0369A1') : (theme === 'dark' ? '#64748B' : '#94A3B8') }}
@@ -132,7 +133,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                     borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.2)' : '#BAE6FD',
                   }}
                 >
-                  PHASE {activeStep.number} OF 06 // DEPLOYMENT ROADMAP
+                  {t.installation.phaseOfLabel} {activeStep.number} / 06
                 </span>
                 <span className="text-xs font-mono"
                   style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
@@ -169,7 +170,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                 <div className="text-xs font-mono font-bold"
                   style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
                 >
-                  CORE DELIVERABLES &amp; GUARENTEES:
+                  {t.installation.deliverablesLabel}:
                 </div>
                 {activeStep.details.map(detail => (
                   <div key={detail} className="flex items-start gap-2 text-xs"
@@ -201,11 +202,11 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                     color: theme === 'dark' ? '#CBD5E1' : '#334155',
                   }}
                 >
-                  ← Prev Phase
+                  {t.installation.prevPhase}
                 </button>
                 <button
-                  disabled={activeStepIndex === INSTALLATION_STEPS.length - 1}
-                  onClick={() => setActiveStepIndex(prev => Math.min(INSTALLATION_STEPS.length - 1, prev + 1))}
+                  disabled={activeStepIndex === steps.length - 1}
+                  onClick={() => setActiveStepIndex(prev => Math.min(steps.length - 1, prev + 1))}
                   className="px-3 py-1.5 rounded-lg border text-xs font-mono disabled:opacity-30 transition-all"
                   style={{
                     backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF',
@@ -213,14 +214,14 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                     color: theme === 'dark' ? '#CBD5E1' : '#334155',
                   }}
                 >
-                  Next Phase →
+                  {t.installation.nextPhase}
                 </button>
               </div>
 
               <span className="text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
               >
-                Phase {activeStepIndex + 1} of 06
+                {t.installation.phaseOfLabel} {activeStepIndex + 1} / 06
               </span>
             </div>
           </div>
@@ -237,7 +238,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
                 <div className="flex items-center justify-between border-b pb-3 mb-3 border-slate-800 text-xs font-mono text-slate-400">
                   <div className="flex items-center gap-1.5">
                     <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Configuration Blueprint</span>
+                    <span>{t.installation.configPreviewLabel}</span>
                   </div>
                   <button
                     onClick={() => copyToClipboard(activeStep.codeSample || '')}
@@ -255,7 +256,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
 
               <div className="mt-4 pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500 flex items-center justify-between">
                 <span>YAML / DNS SYNTAX</span>
-                <span className="text-emerald-400">Validated Production Config</span>
+                <span className="text-emerald-400">{t.installation.validatedLabel}</span>
               </div>
             </div>
           )}
@@ -273,12 +274,12 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
             <div className="text-sm font-bold"
               style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
             >
-              Need Custom Architecture Mapping for Your Infrastructure?
+              {t.installation.calloutTitle}
             </div>
             <div className="text-xs mt-1"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
             >
-              Our systems engineers will build your tailored route configuration and integration timeline during discovery.
+              {t.installation.calloutDesc}
             </div>
           </div>
           <button
@@ -289,7 +290,7 @@ export const InstallationSteps: React.FC<InstallationStepsProps> = ({ onOpenDemo
               color: theme === 'dark' ? '#020617' : '#FFFFFF',
             }}
           >
-            <span>Schedule Discovery Session</span>
+            <span>{t.installation.calloutCta}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

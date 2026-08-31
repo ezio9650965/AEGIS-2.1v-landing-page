@@ -1,9 +1,13 @@
 import React from 'react';
-import { Shield, Key, Eye, Zap, Layers, Server, Lock, CheckCircle2 } from 'lucide-react';
+import { Shield, Key, Eye, Zap, Layers, Server, Lock, CheckCircle2, Cpu, ShieldCheck } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const WhatAegisIs: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
+
+  const pillarIcons = [Lock, Key, Server, Eye];
 
   return (
     <section id="what-is-aegis" className="py-20 border-t relative overflow-hidden"
@@ -23,262 +27,126 @@ export const WhatAegisIs: React.FC = () => {
             }}
           >
             <Shield className="w-3.5 h-3.5" />
-            <span>THE AEGIS ADVANTAGE</span>
+            <span>{t.whatAegisIs.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            Two Unified Pillars: Zero-Trust Gateway + 24/7 MSSP SOC
+            {t.whatAegisIs.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            AEGIS solves the perimeter challenge by combining high-speed proxy authentication with round-the-clock managed security monitoring and automated containment.
+            {t.whatAegisIs.subtitle}
           </p>
         </div>
 
-        {/* 2 Primary Pillars Comparison Grid */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-          
-          {/* Pillar 1: Zero-Trust Reverse Proxy Gateway */}
-          <div className="p-7 sm:p-9 rounded-3xl border flex flex-col justify-between backdrop-blur-md"
-            style={{
-              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
-              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
-              boxShadow: theme === 'dark' ? 'inset 0 1px 0 0 rgba(255,255,255,0.08)' : '0 1px 3px rgba(15,23,42,0.08)',
-            }}
-          >
-            <div>
-              <div className="flex items-center justify-between border-b pb-4 mb-6"
-                style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9' }}
+        {/* 4 Architectural Pillars Grid */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {t.whatAegisIs.pillars.map((pillar, idx) => {
+            const IconComponent = pillarIcons[idx % pillarIcons.length] || ShieldCheck;
+            return (
+              <div 
+                key={idx}
+                className="p-7 rounded-3xl border flex flex-col justify-between backdrop-blur-md transition-all hover:scale-[1.01]"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
+                  borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
+                  boxShadow: theme === 'dark' ? 'inset 0 1px 0 0 rgba(255,255,255,0.08)' : '0 2px 8px rgba(15,23,42,0.06)',
+                }}
               >
                 <div>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider"
-                    style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
+                  <div className="flex items-center justify-between border-b pb-4 mb-5"
+                    style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9' }}
                   >
-                    PILLAR 01 // ACCESS LAYER
-                  </span>
-                  <h3 className="text-xl font-bold mt-1"
-                    style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
+                    <div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider"
+                        style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
+                      >
+                        {pillar.tag}
+                      </span>
+                      <h3 className="text-lg font-bold mt-1"
+                        style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
+                      >
+                        {pillar.title}
+                      </h3>
+                    </div>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{
+                        backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.1)' : '#E0F2FE',
+                        borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.25)' : '#BAE6FD',
+                        borderWidth: '1px',
+                        color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+                      }}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm leading-relaxed mb-6"
+                    style={{ color: theme === 'dark' ? '#CBD5E1' : '#475569' }}
                   >
-                    Identity-Aware Reverse Proxy Gateway
-                  </h3>
+                    {pillar.description}
+                  </p>
                 </div>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+
+                <div className="pt-4 border-t text-xs font-mono flex items-center justify-between"
                   style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.1)' : '#E0F2FE',
-                    borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.25)' : '#BAE6FD',
-                    borderWidth: '1px',
+                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9',
                     color: theme === 'dark' ? '#38BDF8' : '#0369A1',
                   }}
                 >
-                  <Lock className="w-5 h-5" />
+                  <span className="font-semibold">{pillar.tech}</span>
+                  <span className="text-emerald-500 font-bold">● Active Zero Trust</span>
                 </div>
               </div>
+            );
+          })}
+        </div>
 
-              <p className="text-xs leading-relaxed mb-6"
-                style={{ color: theme === 'dark' ? '#CBD5E1' : '#475569' }}
-              >
-                Every request entering the enterprise is cryptographically challenged at the edge before it can touch internal databases or services:
-              </p>
-
-              <div className="space-y-3 font-mono text-xs">
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <Key className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Single Sign-On &amp; Hardware MFA
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      Keycloak OIDC directory integration with Argon2id password hashing and FIDO2/TOTP MFA enforcement.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <Layers className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Per-Request Path Authorization
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      Granular route ACLs (e.g. policy: two_factor on /admin) evaluate identity on every resource fetch.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <Server className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Kernel-Level Micro-Segmentation
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      Internal databases and admin services have zero public IPs and are unreachable except via proxy routes.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-4 border-t text-[11px] font-mono flex items-center justify-between"
-              style={{
-                borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9',
-                color: theme === 'dark' ? '#38BDF8' : '#0369A1',
-              }}
-            >
-              <span>LATENCY OVERHEAD: &lt; 2.5MS</span>
-              <span>ZERO CLIENT INSTALLATION</span>
-            </div>
-          </div>
-
-          {/* Pillar 2: 24/7 Managed SOC & Automated Containment */}
-          <div className="p-7 sm:p-9 rounded-3xl border flex flex-col justify-between backdrop-blur-md"
+        {/* Multi-Layer Defense in Depth Section */}
+        {t.whatAegisIs.defenseLayers && (
+          <div className="mt-12 p-6 sm:p-8 rounded-3xl border"
             style={{
-              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
-              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
-              boxShadow: theme === 'dark' ? 'inset 0 1px 0 0 rgba(255,255,255,0.08)' : '0 1px 3px rgba(15,23,42,0.08)',
+              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
+              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0',
             }}
           >
-            <div>
-              <div className="flex items-center justify-between border-b pb-4 mb-6"
-                style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9' }}
-              >
-                <div>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider"
+            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-6 flex items-center gap-2"
+              style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
+            >
+              <Layers className="w-4 h-4" />
+              <span>{t.whatAegisIs.defenseLayersTitle}</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {t.whatAegisIs.defenseLayers.map((layer, idx) => (
+                <div key={idx} className="p-4 rounded-2xl border"
+                  style={{
+                    backgroundColor: theme === 'dark' ? '#0A0E17' : '#FFFFFF',
+                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.06)' : '#E2E8F0',
+                  }}
+                >
+                  <div className="text-xs font-mono font-bold mb-1"
                     style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                   >
-                    PILLAR 02 // OPERATIONS &amp; SOC
-                  </span>
-                  <h3 className="text-xl font-bold mt-1"
+                    {layer.name}
+                  </div>
+                  <div className="text-xs font-bold mb-2"
                     style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
                   >
-                    24/7 Managed SOC &amp; Automated SOAR
-                  </h3>
-                </div>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(52, 211, 153, 0.1)' : '#DCFCE7',
-                    borderColor: theme === 'dark' ? 'rgba(52, 211, 153, 0.25)' : '#BBF7D0',
-                    borderWidth: '1px',
-                    color: theme === 'dark' ? '#34D399' : '#15803D',
-                  }}
-                >
-                  <Eye className="w-5 h-5" />
-                </div>
-              </div>
-
-              <p className="text-xs leading-relaxed mb-6"
-                style={{ color: theme === 'dark' ? '#CBD5E1' : '#475569' }}
-              >
-                Our dedicated SOC analysts continuously monitor behavioral telemetry, eliminating false positives and enforcing rapid containment:
-              </p>
-
-              <div className="space-y-3 font-mono text-xs">
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <Eye className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Continuous Behavioral Telemetry
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      Wazuh &amp; Sysmon sensors stream endpoint execution and gateway events into ELK with MITRE ATT&amp;CK tagging.
-                    </span>
+                    {layer.role}
                   </div>
+                  <p className="text-xs leading-relaxed"
+                    style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
+                  >
+                    {layer.mechanism}
+                  </p>
                 </div>
-
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <Zap className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Automated Containment (&lt; 5s)
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      SOAR playbooks revoke active Keycloak/Authelia session cookies globally and quarantine compromised hosts automatically.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl border flex items-start gap-3"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
-                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#E2E8F0',
-                  }}
-                >
-                  <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" 
-                    style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
-                  />
-                  <div>
-                    <strong className="block font-sans text-xs"
-                      style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-                    >
-                      Zero Alert Fatigue for Client IT
-                    </strong>
-                    <span style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}>
-                      AEGIS analysts perform raw alert triage. Your internal IT receives curated, high-fidelity escalation alerts only when human action is needed.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-4 border-t text-[11px] font-mono flex items-center justify-between"
-              style={{
-                borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F1F5F9',
-                color: theme === 'dark' ? '#34D399' : '#15803D',
-              }}
-            >
-              <span>24/7 365 LIVE COVERAGE</span>
-              <span>ISOLATED TENANT REPORTING</span>
+              ))}
             </div>
           </div>
-
-        </div>
+        )}
       </div>
     </section>
   );

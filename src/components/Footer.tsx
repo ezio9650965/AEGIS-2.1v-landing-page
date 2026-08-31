@@ -1,13 +1,18 @@
 import React from 'react';
-import { Shield, Lock, Terminal, Globe, ExternalLink, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Footer: React.FC = () => {
   const { theme } = useTheme();
+  const { t, language } = useLanguage();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const backToTopLabel = language === 'fr' ? 'Haut de page' : language === 'ar' ? 'العودة للأعلى' : 'Back to top';
+  const socStatusLabel = language === 'fr' ? '● Statut SOC : Opérationnel' : language === 'ar' ? '● حالة مركز العمليات: يعمل بشكل كامل' : '● SOC Status: Operational';
 
   return (
     <footer className="border-t relative overflow-hidden"
@@ -38,15 +43,14 @@ export const Footer: React.FC = () => {
             <p className="text-xs leading-relaxed max-w-md"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
             >
-              AEGIS 2.1v is an enterprise Zero-Trust Access Gateway &amp; MSSP SOC platform. 
-              We replace perimeter assumptions with continuous cryptographic verification, automated containment, and human-in-the-loop threat monitoring.
+              {t.footer.description}
             </p>
             <div className="flex items-center gap-4 text-xs font-mono"
               style={{ color: theme === 'dark' ? '#64748B' : '#94A3B8' }}
             >
-              <span>NIST SP 800-207 Compliant</span>
+              <span>{t.footer.legalNote}</span>
               <span>•</span>
-              <span>Zero-Trust Architecture</span>
+              <span>NIST SP 800-207</span>
             </div>
           </div>
 
@@ -55,16 +59,16 @@ export const Footer: React.FC = () => {
             <div className="text-xs font-mono font-bold uppercase mb-3"
               style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
             >
-              ARCHITECTURE
+              {t.footer.architectureTitle}
             </div>
             <ul className="space-y-2 text-xs"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
             >
-              <li><a href="#how-it-works" className="hover:underline">Ingress &amp; Containment Pipeline</a></li>
-              <li><a href="#zero-trust-model" className="hover:underline">Zero-Trust Verification Pillars</a></li>
-              <li><a href="#comparison" className="hover:underline">Firewall vs. AEGIS Matrix</a></li>
-              <li><a href="#onboarding" className="hover:underline">Karim Onboarding Story</a></li>
-              <li><a href="#qa" className="hover:underline">Business &amp; Security FAQ</a></li>
+              <li><a href="#how-it-works" className="hover:underline">{t.nav.howItWorks}</a></li>
+              <li><a href="#zero-trust-model" className="hover:underline">{t.zeroTrustModel.badge}</a></li>
+              <li><a href="#comparison" className="hover:underline">{t.nav.comparison}</a></li>
+              <li><a href="#onboarding" className="hover:underline">{t.nav.onboarding}</a></li>
+              <li><a href="#qa" className="hover:underline">{t.nav.qa}</a></li>
             </ul>
           </div>
 
@@ -73,15 +77,15 @@ export const Footer: React.FC = () => {
             <div className="text-xs font-mono font-bold uppercase mb-3"
               style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
             >
-              MSSP OPERATIONS
+              {t.footer.securityTitle}
             </div>
             <ul className="space-y-2 text-xs"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
             >
-              <li><a href="#service-tiering" className="hover:underline">24/7 SOC Triage Model</a></li>
-              <li><a href="#employee-experience" className="hover:underline">Role-Based Access Governance</a></li>
-              <li><a href="#installation" className="hover:underline">4-Phase Deployment Roadmap</a></li>
-              <li><span className="font-mono text-[11px] text-emerald-500 font-bold">● SOC Status: Operational</span></li>
+              <li><a href="#service-tiering" className="hover:underline">{t.nav.msspSoc}</a></li>
+              <li><a href="#employee-experience" className="hover:underline">{t.nav.roleExperience}</a></li>
+              <li><a href="#installation" className="hover:underline">{t.installation.badge}</a></li>
+              <li><span className="font-mono text-[11px] text-emerald-500 font-bold">{socStatusLabel}</span></li>
             </ul>
           </div>
         </div>
@@ -94,14 +98,14 @@ export const Footer: React.FC = () => {
           }}
         >
           <div>
-            &copy; {new Date().getFullYear()} AEGIS Security Systems. All rights reserved.
+            &copy; {new Date().getFullYear()} AEGIS Security Systems. {t.footer.rightsReserved}
           </div>
           <div className="flex items-center gap-6">
             <button
               onClick={scrollToTop}
-              className="inline-flex items-center gap-1 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
             >
-              <span>Back to top</span>
+              <span>{backToTopLabel}</span>
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>

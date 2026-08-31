@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { QA_ITEMS } from '../data';
-import { HelpCircle, ChevronDown, ChevronUp, Search, CheckCircle2, Shield, ArrowRight, BookOpen, AlertCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search, CheckCircle2, Shield, ArrowRight, BookOpen } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface QASectionProps {
   onOpenDemoModal: () => void;
@@ -9,7 +9,9 @@ interface QASectionProps {
 
 export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
   const { theme } = useTheme();
-  const [openIds, setOpenIds] = useState<string[]>([QA_ITEMS[0].id, QA_ITEMS[1].id, QA_ITEMS[7].id]);
+  const { t } = useLanguage();
+  const items = t.qa.items;
+  const [openIds, setOpenIds] = useState<string[]>([items[0]?.id || 'what-is-aegis', items[1]?.id || 'replace-firewall', items[7]?.id || 'why-no-vpn']);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -22,16 +24,16 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
   };
 
   const categories = [
-    { id: 'all', label: 'All Questions' },
-    { id: 'why-zerotrust', label: 'Why Zero Trust & Firewalls' },
+    { id: 'all', label: t.qa.allCategories },
+    { id: 'why-zerotrust', label: 'Zero Trust & Firewalls' },
     { id: 'mechanics', label: 'Architecture & Mechanics' },
-    { id: 'team-impact', label: 'Team & Production Impact' },
+    { id: 'team-impact', label: 'Team Impact' },
     { id: 'beyond-beyondcorp', label: 'Beyond BeyondCorp' },
-    { id: 'soc-visibility', label: 'Zone 4 MSSP SOC' },
-    { id: 'security-deepdive', label: 'Security Deep-Dive' },
+    { id: 'soc-visibility', label: 'MSSP SOC' },
+    { id: 'security-deepdive', label: 'Deep Dive' },
   ];
 
-  const filteredItems = QA_ITEMS.filter(item => {
+  const filteredItems = items.filter(item => {
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesSearch = item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.shortAnswer.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -57,17 +59,17 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
             }}
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span>BUSINESS &amp; SECURITY FAQ</span>
+            <span>{t.qa.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            AEGIS Zero-Trust Gateway — Technical &amp; Operational FAQ
+            {t.qa.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            Straightforward, defensible answers for business owners and IT decision-makers. Every statement represents honest security engineering, verified architectural constraints, and real operational trade-offs.
+            {t.qa.subtitle}
           </p>
         </div>
 
@@ -83,13 +85,12 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
             style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
           >
             <Shield className="w-4 h-4" />
-            <span>EXECUTIVE SUMMARY — WHAT AEGIS ACTUALLY IS</span>
+            <span>{t.whatAegisIs.summaryCardTitle}</span>
           </div>
           <p className="text-sm leading-relaxed"
             style={{ color: theme === 'dark' ? '#F8FAFC' : '#0F172A' }}
           >
-            <strong>AEGIS</strong> is an identity-aware access gateway and reverse proxy that replaces implicit network trust (the idea that anyone on the internal network or connected to a VPN is trustworthy) with explicit, continuous, per-request verification. 
-            Built on <strong>Traefik, Authelia, and Keycloak</strong> with <strong>Wazuh, Sysmon, and automated SOAR containment</strong>, it wraps around your existing infrastructure without requiring a rip-and-replace migration.
+            {t.whatAegisIs.summaryCardDesc}
           </p>
         </div>
 
@@ -129,7 +130,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search architecture FAQ..."
+              placeholder={t.qa.searchPlaceholder}
               className="w-full pl-9 pr-4 py-2 rounded-lg border text-xs focus:outline-none transition-colors"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#FFFFFF',
@@ -150,7 +151,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
                 color: theme === 'dark' ? '#94A3B8' : '#64748B',
               }}
             >
-              No questions matched your search criteria.
+              {t.qa.noResults}
             </div>
           ) : (
             filteredItems.map(item => {
@@ -246,7 +247,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
                         />
                         <span>
                           <strong style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}>
-                            Architectural Takeaway:{' '}
+                            {t.qa.keyTakeawayLabel}:{' '}
                           </strong>
                           {item.keyTakeaway}
                         </span>
@@ -271,12 +272,12 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
             <div className="text-sm font-bold"
               style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
             >
-              Have Specific Questions About Your Custom Network Stack?
+              {t.installation.calloutTitle}
             </div>
             <div className="text-xs mt-1"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
             >
-              Speak directly with an AEGIS security architect. No sales scripts, just real infrastructure evaluation.
+              {t.installation.calloutDesc}
             </div>
           </div>
           <button
@@ -287,7 +288,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
               color: theme === 'dark' ? '#020617' : '#FFFFFF',
             }}
           >
-            <span>Schedule Architecture Review</span>
+            <span>{t.nav.architectureReview}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

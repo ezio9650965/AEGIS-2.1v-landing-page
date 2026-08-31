@@ -2,6 +2,7 @@ import React from 'react';
 import { Shield, Lock, ArrowRight, CheckCircle2, ShieldAlert, Cpu, Terminal, ExternalLink } from 'lucide-react';
 import { NetworkGraph } from './NetworkGraph';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
   onOpenDemoModal: () => void;
@@ -9,6 +10,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
   const { theme } = useTheme();
+  const { t, isRTL } = useLanguage();
 
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
@@ -43,32 +45,30 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
               }}
             >
               <Shield className="w-3.5 h-3.5" />
-              <span className="font-semibold">AEGIS 2.1v</span>
+              <span className="font-semibold">{t.hero.badgeVersion}</span>
               <span style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.3)' : '#94A3B8' }}>|</span>
-              <span>Zero-Trust Gateway &amp; MSSP SOC</span>
+              <span>{t.hero.badgeCategory}</span>
             </div>
 
             {/* Main Punchy Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]"
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15]"
               style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
             >
-              Perimeter Firewalls Leave Blindspots.{' '}
+              {t.hero.titlePart1}{' '}
               <span 
                 className="inline-block"
                 style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
               >
-                Zero-Trust Isolation
+                {t.hero.titleHighlight}
               </span>{' '}
-              Eliminates Them.
+              {t.hero.titlePart2}
             </h1>
 
             {/* Plain English Subtitle */}
             <p className="text-base sm:text-lg leading-relaxed max-w-2xl font-normal"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
             >
-              AEGIS replaces implicit network trust with continuous per-request identity verification. 
-              Built on a battle-tested reverse proxy gateway and backed by 24/7 Managed SOC containment, 
-              we protect internal tools and databases against lateral movement with zero client VPN friction.
+              {t.hero.subtitle}
             </p>
 
             {/* Concrete Engineering Guarantees */}
@@ -79,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                 <CheckCircle2 className="w-4 h-4 shrink-0" 
                   style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                 />
-                <span>Zero Trust per HTTP/TCP Request</span>
+                <span>{t.hero.guarantee1}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
@@ -87,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                 <CheckCircle2 className="w-4 h-4 shrink-0" 
                   style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                 />
-                <span>Micro-segmented Kernel Isolation</span>
+                <span>{t.hero.guarantee2}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
@@ -95,7 +95,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                 <CheckCircle2 className="w-4 h-4 shrink-0" 
                   style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                 />
-                <span>&lt; 5s Automated Threat Containment</span>
+                <span>{t.hero.guarantee3}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
@@ -103,7 +103,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                 <CheckCircle2 className="w-4 h-4 shrink-0" 
                   style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                 />
-                <span>Zero Per-Seat SaaS Taxes</span>
+                <span>{t.hero.guarantee4}</span>
               </div>
             </div>
 
@@ -118,8 +118,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                   color: theme === 'dark' ? '#020617' : '#FFFFFF',
                 }}
               >
-                <span>Request Architecture Review</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{t.hero.ctaPrimary}</span>
+                <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
               </button>
 
               <a
@@ -131,7 +131,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                   color: theme === 'dark' ? '#F8FAFC' : '#0F172A',
                 }}
               >
-                Explore Ingress Pipeline
+                {t.hero.ctaSecondary}
               </a>
             </div>
 
@@ -139,7 +139,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
             <div className="pt-2 text-[11px] font-mono"
               style={{ color: theme === 'dark' ? '#64748B' : '#94A3B8' }}
             >
-              * Built on open-source foundations (Traefik, Authelia, Keycloak, Wazuh, Sysmon). No proprietary lock-in.
+              {t.hero.openSourceNote}
             </div>
 
           </div>

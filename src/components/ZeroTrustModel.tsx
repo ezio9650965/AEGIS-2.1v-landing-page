@@ -1,37 +1,21 @@
 import React from 'react';
-import { ShieldCheck, Key, Lock, Eye, Zap, ArrowRight, Layers, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Key, Lock, Eye, Zap, Layers } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ZeroTrustModel: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
-  const pillars = [
-    {
-      icon: Key,
-      title: '1. Identity as the Primary Perimeter',
-      desc: 'Network location (IP address or Wi-Fi network) confers zero access rights. Every entity must present cryptographically signed, valid identity credentials.'
-    },
-    {
-      icon: Lock,
-      title: '2. Enforced Hardware-Backed MFA',
-      desc: 'Eliminates password reuse and phishing-based credential stuffing with mandatory WebAuthn, FIDO2, and biometric multi-factor authentication.'
-    },
-    {
-      icon: Layers,
-      title: '3. Granular Least-Privilege Access',
-      desc: 'Users and service accounts receive access strictly to the exact URL paths and micro-services necessary for their immediate task — never the whole network.'
-    },
-    {
-      icon: Eye,
-      title: '4. Continuous Contextual Monitoring',
-      desc: 'Session trust is not static. AEGIS continuously evaluates client posture, impossible velocity travel, and endpoint telemetry throughout the session.'
-    },
-    {
-      icon: Zap,
-      title: '5. Automated Real-Time Containment',
-      desc: 'When an anomaly or breach indicator is detected, containment executes programmatically in under 5 seconds (session kill and network quarantine).'
-    }
-  ];
+  const iconMap = [Key, Lock, Layers, Eye, Zap];
+
+  const pillars = t.zeroTrustModel.principles.map((principle, idx) => ({
+    icon: iconMap[idx] || ShieldCheck,
+    title: principle.title,
+    rule: principle.rule,
+    desc: principle.description,
+    howAegisEnforces: principle.howAegisEnforces
+  }));
 
   return (
     <section id="zero-trust-model" className="py-20 border-t relative overflow-hidden"
@@ -51,17 +35,17 @@ export const ZeroTrustModel: React.FC = () => {
             }}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>FOUNDATIONAL PRINCIPLES</span>
+            <span>{t.zeroTrustModel.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            The Zero-Trust Model, Explained Simply
+            {t.zeroTrustModel.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            &quot;Never trust, always verify.&quot; In plain business language, this means your internal servers treat a request from the CEO&apos;s office with the exact same rigorous cryptographic inspection as a request from an untrusted public internet cafe.
+            {t.zeroTrustModel.subtitle}
           </p>
         </div>
 
@@ -90,16 +74,33 @@ export const ZeroTrustModel: React.FC = () => {
                   >
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold mb-2"
+                  <h3 className="text-base font-bold mb-1"
                     style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
                   >
                     {pillar.title}
                   </h3>
-                  <p className="text-xs leading-relaxed"
+                  <div className="text-[11px] font-mono mb-2"
+                    style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
+                  >
+                    {pillar.rule}
+                  </div>
+                  <p className="text-xs leading-relaxed mb-3"
                     style={{ color: theme === 'dark' ? '#CBD5E1' : '#475569' }}
                   >
                     {pillar.desc}
                   </p>
+                  <div className="p-2.5 rounded-lg border text-[11px] font-mono"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : '#F8FAFC',
+                      borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.06)' : '#E2E8F0',
+                      color: theme === 'dark' ? '#94A3B8' : '#64748B',
+                    }}
+                  >
+                    <span className="font-semibold block mb-0.5" style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}>
+                      AEGIS Enforcement:
+                    </span>
+                    {pillar.howAegisEnforces}
+                  </div>
                 </div>
 
                 <div className="mt-6 pt-3 border-t flex items-center justify-between text-[10px] font-mono"
@@ -109,7 +110,7 @@ export const ZeroTrustModel: React.FC = () => {
                   }}
                 >
                   <span>PILLAR 0{idx + 1}</span>
-                  <span style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}>VERIFIED</span>
+                  <span style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}>NIST 800-207</span>
                 </div>
               </div>
             );
@@ -132,17 +133,17 @@ export const ZeroTrustModel: React.FC = () => {
                 }}
               >
                 <Zap className="w-3 h-3" />
-                <span>ARCHITECTURAL ADVANCEMENT</span>
+                <span>NIST &amp; CISA ALIGNED</span>
               </div>
               <h3 className="text-base font-bold mb-2"
                 style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
               >
-                Going Beyond Basic BeyondCorp Access
+                {t.zeroTrustModel.nistRef}
               </h3>
               <p className="text-xs leading-relaxed"
                 style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
               >
-                Basic Zero-Trust (like early BeyondCorp implementations) checks identity only at initial login. AEGIS extends this paradigm by layering <strong>continuous behavioral telemetry and automated containment</strong> onto every transaction.
+                {t.hero.subtitle}
               </p>
             </div>
 
@@ -154,67 +155,6 @@ export const ZeroTrustModel: React.FC = () => {
             >
               <span>ACCESS DECISION + ACTIVE CONTAINMENT</span>
             </div>
-          </div>
-        </div>
-
-        {/* Business Impact Box */}
-        <div className="mt-10 p-6 rounded-2xl border grid grid-cols-1 md:grid-cols-3 gap-6 backdrop-blur-md"
-          style={{
-            backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
-            borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
-            boxShadow: theme === 'dark' ? 'inset 0 1px 0 0 rgba(255, 255, 255, 0.06)' : '0 1px 3px rgba(15, 23, 42, 0.08)',
-          }}
-        >
-          <div>
-            <div className="text-xs font-mono mb-1 font-bold"
-              style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-            >
-              NO SUDDEN OUTAGES
-            </div>
-            <div className="text-sm font-semibold"
-              style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-            >
-              Incremental Rollout
-            </div>
-            <p className="text-xs mt-1 leading-relaxed"
-              style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
-            >
-              Onboard one application at a time with zero disruption to active business services.
-            </p>
-          </div>
-          <div>
-            <div className="text-xs font-mono mb-1 font-bold"
-              style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-            >
-              AUDIT READINESS
-            </div>
-            <div className="text-sm font-semibold"
-              style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-            >
-              Immutable Audit Trail
-            </div>
-            <p className="text-xs mt-1 leading-relaxed"
-              style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
-            >
-              Every user action and access decision is logged with cryptographic timestamps for compliance reviews.
-            </p>
-          </div>
-          <div>
-            <div className="text-xs font-mono mb-1 font-bold"
-              style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
-            >
-              REDUCED RISK
-            </div>
-            <div className="text-sm font-semibold"
-              style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
-            >
-              Contained Compromise
-            </div>
-            <p className="text-xs mt-1 leading-relaxed"
-              style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
-            >
-              A phished credential only gives access to a single low-privilege view, immediately flagged by behavioral telemetry.
-            </p>
           </div>
         </div>
       </div>

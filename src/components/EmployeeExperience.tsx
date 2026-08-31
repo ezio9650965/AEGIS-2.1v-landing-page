@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { ROLE_EXPERIENCES } from '../data';
-import { UserCheck, Shield, Clock, Lock, CheckCircle2, XCircle, ArrowRight, Info } from 'lucide-react';
+import { UserCheck, Shield, Clock, CheckCircle2, XCircle, Info } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const EmployeeExperience: React.FC = () => {
   const { theme } = useTheme();
-  const [selectedRoleId, setSelectedRoleId] = useState<string>(ROLE_EXPERIENCES[0].roleId);
+  const { t } = useLanguage();
+  const roles = t.employeeExperience.roles;
+  const [selectedRoleId, setSelectedRoleId] = useState<string>(roles[0]?.roleId || 'marketing');
 
-  const activeRole = ROLE_EXPERIENCES.find(r => r.roleId === selectedRoleId) || ROLE_EXPERIENCES[0];
+  const activeRole = roles.find(r => r.roleId === selectedRoleId) || roles[0];
 
   return (
     <section id="employee-experience" className="py-20 relative overflow-hidden">
@@ -23,24 +25,23 @@ export const EmployeeExperience: React.FC = () => {
             }}
           >
             <UserCheck className="w-3.5 h-3.5" />
-            <span>DAY-IN-THE-LIFE WORKFLOW</span>
+            <span>{t.employeeExperience.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            Employee Experience: Zero Friction, Strict Isolation
+            {t.employeeExperience.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            Security should empower employees, not get in their way. With AEGIS, authorized staff experience single-tap SSO in the morning and seamless browser access all day. 
-            The security boundary remains invisible until someone attempts to access resources outside their authorized role.
+            {t.employeeExperience.subtitle}
           </p>
         </div>
 
         {/* Role Selector Tabs */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {ROLE_EXPERIENCES.map(role => {
+          {roles.map(role => {
             const isSelected = selectedRoleId === role.roleId;
             return (
               <button
@@ -122,7 +123,7 @@ export const EmployeeExperience: React.FC = () => {
                   style={{ color: theme === 'dark' ? '#34D399' : '#15803D' }}
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>AUTHORIZED RESOURCES (PERMITTED)</span>
+                  <span>{t.employeeExperience.typicalAccessLabel}</span>
                 </div>
                 <div className="space-y-1.5">
                   {activeRole.typicalAccess.map(item => (
@@ -145,7 +146,7 @@ export const EmployeeExperience: React.FC = () => {
                   style={{ color: theme === 'dark' ? '#F87171' : '#B91C1C' }}
                 >
                   <XCircle className="w-4 h-4" />
-                  <span>RESTRICTED TARGETS (CLEAN 403 / BLOCKED)</span>
+                  <span>{t.employeeExperience.restrictedTargetsLabel}</span>
                 </div>
                 <div className="space-y-1.5">
                   {activeRole.restrictedTargets.map(item => (
@@ -179,7 +180,7 @@ export const EmployeeExperience: React.FC = () => {
                 <strong className="block font-mono text-[11px] mb-0.5"
                   style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
                 >
-                  GOVERNANCE RULE
+                  {t.employeeExperience.governanceTitle}
                 </strong>
                 {activeRole.governanceNote}
               </div>
@@ -203,7 +204,7 @@ export const EmployeeExperience: React.FC = () => {
                 <Clock className="w-4 h-4" 
                   style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
                 />
-                <span>Daily Access Timeline</span>
+                <span>{t.employeeExperience.dailyScheduleTitle}</span>
               </div>
               <span className="text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}

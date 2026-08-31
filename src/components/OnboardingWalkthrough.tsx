@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { ONBOARDING_STEPS } from '../data';
-import { UserCheck, Shield, CheckCircle2, ArrowRight, UserPlus, Mail, Key, QrCode, Lock, AlertOctagon, RefreshCw, UserMinus } from 'lucide-react';
+import { UserCheck, Shield, CheckCircle2, UserPlus, Mail, Key, QrCode, Lock, AlertOctagon, RefreshCw, UserMinus } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const OnboardingWalkthrough: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
+  const steps = t.onboarding.steps;
   const [activeStepIndex, setActiveStepIndex] = useState(0);
 
   const getStepIcon = (stepNumber: number) => {
@@ -21,7 +23,7 @@ export const OnboardingWalkthrough: React.FC = () => {
     }
   };
 
-  const activeStep = ONBOARDING_STEPS[activeStepIndex];
+  const activeStep = steps[activeStepIndex] || steps[0];
   const StepIcon = getStepIcon(activeStep.step);
 
   return (
@@ -42,24 +44,23 @@ export const OnboardingWalkthrough: React.FC = () => {
             }}
           >
             <UserCheck className="w-3.5 h-3.5" />
-            <span>DAY-ONE ONBOARDING JOURNEY</span>
+            <span>{t.onboarding.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            New Employee Onboarding Walkthrough: Karim’s First Monday
+            {t.onboarding.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            Follow the 8-step journey of a new software developer joining the company. 
-            See how AEGIS provides a friction-free day-one experience while strictly maintaining least-privilege boundaries and instant single-click offboarding.
+            {t.onboarding.subtitle}
           </p>
         </div>
 
         {/* 8-Step Timeline Horizontal Grid */}
         <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
-          {ONBOARDING_STEPS.map((step, idx) => {
+          {steps.map((step, idx) => {
             const isSelected = activeStepIndex === idx;
             const Icon = getStepIcon(step.step);
 
@@ -123,7 +124,7 @@ export const OnboardingWalkthrough: React.FC = () => {
                     borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.2)' : '#BAE6FD',
                   }}
                 >
-                  STEP {activeStep.step} OF 08 // ONBOARDING ROADMAP
+                  {t.onboarding.stepCountLabel} {activeStep.step} / 08
                 </span>
                 <span className="text-xs font-mono"
                   style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
@@ -159,7 +160,7 @@ export const OnboardingWalkthrough: React.FC = () => {
                 <div className="text-xs font-mono font-bold mb-1"
                   style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
                 >
-                  WHAT KARIM EXPERIENCES:
+                  {t.onboarding.actionLabel}
                 </div>
                 <p className="text-sm leading-relaxed"
                   style={{ color: theme === 'dark' ? '#F8FAFC' : '#0F172A' }}
@@ -172,7 +173,7 @@ export const OnboardingWalkthrough: React.FC = () => {
                 <div className="text-xs font-mono font-semibold"
                   style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
                 >
-                  UNDERLYING SECURITY MECHANISM:
+                  {t.onboarding.securityMechanismLabel}
                 </div>
                 <p className="text-xs leading-relaxed"
                   style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
@@ -202,8 +203,8 @@ export const OnboardingWalkthrough: React.FC = () => {
                   ← Prev
                 </button>
                 <button
-                  disabled={activeStepIndex === ONBOARDING_STEPS.length - 1}
-                  onClick={() => setActiveStepIndex(prev => Math.min(ONBOARDING_STEPS.length - 1, prev + 1))}
+                  disabled={activeStepIndex === steps.length - 1}
+                  onClick={() => setActiveStepIndex(prev => Math.min(steps.length - 1, prev + 1))}
                   className="px-3 py-1.5 rounded-lg border text-xs font-mono disabled:opacity-30 transition-all"
                   style={{
                     backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF',
@@ -218,7 +219,7 @@ export const OnboardingWalkthrough: React.FC = () => {
               <span className="text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
               >
-                Step {activeStepIndex + 1} of 08
+                {t.onboarding.stepCountLabel} {activeStepIndex + 1} / 08
               </span>
             </div>
           </div>
@@ -235,7 +236,7 @@ export const OnboardingWalkthrough: React.FC = () => {
                 style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
               >
                 <Shield className="w-4 h-4" />
-                <span>ARCHITECTURAL PRINCIPLE</span>
+                <span>{t.onboarding.keyTakeawayLabel}</span>
               </div>
 
               <div className="p-4 rounded-xl border text-xs leading-relaxed"
@@ -245,7 +246,7 @@ export const OnboardingWalkthrough: React.FC = () => {
                   color: theme === 'dark' ? '#F8FAFC' : '#0F172A',
                 }}
               >
-                <strong>Key Takeaway:</strong> {activeStep.keyLesson}
+                {activeStep.keyLesson}
               </div>
 
               <div className="mt-6 space-y-2 text-[11px] font-mono"

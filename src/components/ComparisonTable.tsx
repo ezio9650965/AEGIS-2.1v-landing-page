@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { COMPARISON_DATA } from '../data';
 import { Check, X, Minus, ShieldCheck, HelpCircle, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ComparisonTableProps {
   onOpenDemoModal: () => void;
@@ -9,6 +10,7 @@ interface ComparisonTableProps {
 
 export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModal }) => {
   const { theme } = useTheme();
+  const { t, isRTL, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>('All');
 
   const categories = ['All', 'Authentication', 'Network Architecture', 'Session Governance', 'Incident Response', 'Resilience', 'Traffic Handling', 'Implementation'];
@@ -103,18 +105,17 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModa
             }}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>ARCHITECTURAL COMPARISON</span>
+            <span>{t.comparison.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            AEGIS vs. Traditional Security Approaches
+            {t.comparison.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            Understand the architectural differences between traditional perimeter firewalls, VPN-centric models, and AEGIS Zero-Trust Gateway.
-            Every claim represents verifiable security mechanics, not marketing hype.
+            {t.comparison.subtitle}
           </p>
         </div>
 
@@ -160,16 +161,18 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModa
                 color: theme === 'dark' ? '#F8FAFC' : '#0F172A',
               }}
             >
-              <div className="col-span-3 p-4">Security Capability</div>
-              <div className="col-span-3 p-4 border-l"
-                style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0' }}
-              >
-                Traditional Firewall (pfSense/Edge)
+              <div className="col-span-3 p-4">
+                {language === 'fr' ? 'CRITÈRE / CAPACITÉ' : language === 'ar' ? 'المعيار / القدرة الأمنية' : 'SECURITY CRITERIA'}
               </div>
               <div className="col-span-3 p-4 border-l"
                 style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0' }}
               >
-                Corporate VPN + Implicit Trust
+                {t.comparison.colPerimeter}
+              </div>
+              <div className="col-span-3 p-4 border-l"
+                style={{ borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0' }}
+              >
+                {t.comparison.colVpn}
               </div>
               <div className="col-span-3 p-4 border-l font-extrabold"
                 style={{
@@ -178,7 +181,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModa
                   color: theme === 'dark' ? '#38BDF8' : '#0369A1',
                 }}
               >
-                AEGIS Zero-Trust Gateway
+                {t.comparison.colAegis}
               </div>
             </div>
 
@@ -253,12 +256,16 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModa
             <div className="text-sm font-bold"
               style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
             >
-              Complementary, Not Conflicting Architecture
+              {language === 'fr' ? 'La Différence Architecturale Fondamentale' : language === 'ar' ? 'الفارق الهندسي الجوهري' : 'The Fundamental Architectural Difference'}
             </div>
             <p className="text-xs mt-1"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
             >
-              You do not need to replace pfSense or edge hardware. Keep your edge firewall for IP routing, and place AEGIS in front of internal applications to eliminate implicit trust.
+              {language === 'fr' 
+                ? 'Les pare-feu traditionnels protègent les réseaux en bloc. AEGIS authentifie et isole chaque ressource et chaque identité de manière granulaire.'
+                : language === 'ar'
+                ? 'جدران الحماية التقليدية تفترض الأمان داخل المحيط، بينما بنية AEGIS تتحقق من كل معاملة وهوية رقمياً قبل تفويض الوصول لأي خدمة معزولة.'
+                : 'Perimeter firewalls protect network perimeters in bulk. AEGIS authenticates every single transaction and identity cryptographically before proxying.'}
             </p>
           </div>
           <button
@@ -269,8 +276,8 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenDemoModa
               color: theme === 'dark' ? '#020617' : '#FFFFFF',
             }}
           >
-            <span>Discuss Topology Options</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t.comparison.ctaButton}</span>
+            <ArrowRight className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
           </button>
         </div>
       </div>

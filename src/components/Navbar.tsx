@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Shield, Menu, X, ArrowRight, ExternalLink, Sun, Moon } from 'lucide-react';
+import { Shield, Menu, X, ArrowRight, ExternalLink, Sun, Moon, Globe } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage, Language } from '../context/LanguageContext';
 
 interface NavbarProps {
   onOpenDemoModal: () => void;
@@ -9,15 +10,22 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t, isRTL } = useLanguage();
 
   const navLinks = [
-    { label: 'Architecture', href: '#what-is-aegis' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Comparison', href: '#comparison' },
-    { label: 'Role Experience', href: '#employee-experience' },
-    { label: 'MSSP SOC', href: '#service-tiering' },
-    { label: 'Onboarding', href: '#onboarding' },
-    { label: 'Q&A', href: '#qa' },
+    { label: t.nav.architecture, href: '#what-is-aegis' },
+    { label: t.nav.howItWorks, href: '#how-it-works' },
+    { label: t.nav.comparison, href: '#comparison' },
+    { label: t.nav.roleExperience, href: '#employee-experience' },
+    { label: t.nav.msspSoc, href: '#service-tiering' },
+    { label: t.nav.onboarding, href: '#onboarding' },
+    { label: t.nav.qa, href: '#qa' },
+  ];
+
+  const languages: { code: Language; label: string; shortLabel: string; flag: string }[] = [
+    { code: 'en', label: 'English', shortLabel: 'EN', flag: '🇺🇸' },
+    { code: 'fr', label: 'Français', shortLabel: 'FR', flag: '🇫🇷' },
+    { code: 'ar', label: 'العربية', shortLabel: 'عربي', flag: '🇸🇦' },
   ];
 
   return (
@@ -61,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-5">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -82,15 +90,53 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
           ))}
         </nav>
 
-        {/* Action Controls & Theme Toggle */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Action Controls, Language Switcher & Theme Toggle */}
+        <div className="hidden sm:flex items-center gap-2.5">
+          {/* Language Switcher Segmented Control */}
+          <div 
+            className="flex items-center p-1 rounded-lg border text-xs font-mono transition-colors"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#F1F5F9',
+              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : '#CBD5E1',
+            }}
+            role="group"
+            aria-label={t.nav.language}
+          >
+            <Globe className="w-3.5 h-3.5 mx-1 opacity-60" style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }} />
+            {languages.map((lang) => {
+              const isActive = language === lang.code;
+              return (
+                <button
+                  key={lang.code}
+                  onClick={() => setLanguage(lang.code)}
+                  id={`lang-btn-${lang.code}`}
+                  aria-pressed={isActive}
+                  title={`Switch language to ${lang.label}`}
+                  className="px-2 py-1 rounded text-xs font-semibold transition-all duration-200 flex items-center gap-1"
+                  style={{
+                    backgroundColor: isActive 
+                      ? (theme === 'dark' ? '#38BDF8' : '#0369A1')
+                      : 'transparent',
+                    color: isActive
+                      ? (theme === 'dark' ? '#0F172A' : '#FFFFFF')
+                      : (theme === 'dark' ? '#94A3B8' : '#64748B'),
+                    fontWeight: isActive ? 700 : 500,
+                  }}
+                >
+                  <span className="text-[11px] leading-none">{lang.flag}</span>
+                  <span className="text-[11px]">{lang.shortLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+
           {/* Light / Dark Mode Toggle Button */}
           <button
             onClick={toggleTheme}
             id="theme-toggle-btn"
             aria-label={`Switch to ${theme === 'dark' ? 'AEGIS Light' : 'AEGIS Dark'} mode`}
             title={`Switch to ${theme === 'dark' ? 'AEGIS Light' : 'AEGIS Dark'} mode`}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF',
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : '#CBD5E1',
@@ -101,12 +147,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             {theme === 'dark' ? (
               <>
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-[11px] font-semibold">Light Mode</span>
+                <span className="text-[11px] font-semibold">{t.nav.lightMode}</span>
               </>
             ) : (
               <>
                 <Moon className="w-3.5 h-3.5 text-slate-700" />
-                <span className="text-[11px] font-semibold">Dark Mode</span>
+                <span className="text-[11px] font-semibold">{t.nav.darkMode}</span>
               </>
             )}
           </button>
@@ -116,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             href="https://github.com/ezio9650965/AEGIS-2.1v-overview.git"
             target="_blank"
             rel="noreferrer"
-            className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
+            className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#FFFFFF',
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
@@ -124,26 +170,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             }}
           >
             <ExternalLink className="w-3 h-3" />
-            <span>GitHub Spec</span>
+            <span>{t.nav.githubSpec}</span>
           </a>
 
           {/* Request Architecture Review CTA */}
           <button
             onClick={onOpenDemoModal}
             id="nav-cta-btn"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs font-bold transition-all shadow-sm active:scale-95"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all shadow-sm active:scale-95 whitespace-nowrap"
             style={{
               backgroundColor: theme === 'dark' ? '#06B6D4' : '#0369A1',
               color: theme === 'dark' ? '#020617' : '#FFFFFF',
             }}
           >
-            <span>Architecture Review</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t.nav.architectureReview}</span>
+            <ArrowRight className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
           </button>
         </div>
 
-        {/* Mobile Hamburger & Theme Toggle */}
-        <div className="flex sm:hidden items-center gap-2">
+        {/* Mobile Hamburger, Language & Theme Toggle */}
+        <div className="flex sm:hidden items-center gap-1.5">
+          {/* Quick mobile language toggle button */}
+          <div className="flex items-center border rounded-lg overflow-hidden"
+            style={{
+              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.15)' : '#CBD5E1',
+            }}
+          >
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => setLanguage(lang.code)}
+                className="px-1.5 py-1 text-[11px] font-mono font-bold"
+                style={{
+                  backgroundColor: language === lang.code
+                    ? (theme === 'dark' ? '#38BDF8' : '#0369A1')
+                    : (theme === 'dark' ? 'rgba(255,255,255,0.05)' : '#FFFFFF'),
+                  color: language === lang.code
+                    ? (theme === 'dark' ? '#0A0E17' : '#FFFFFF')
+                    : (theme === 'dark' ? '#94A3B8' : '#64748B'),
+                }}
+              >
+                {lang.shortLabel}
+              </button>
+            ))}
+          </div>
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -210,8 +281,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
                 color: theme === 'dark' ? '#020617' : '#FFFFFF',
               }}
             >
-              <span>Request Architecture Review</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>{t.nav.architectureReview}</span>
+              <ArrowRight className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
             </button>
           </div>
         </div>
@@ -219,3 +290,4 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
     </header>
   );
 };
+

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, ArrowRight, CheckCircle2, Building, Mail, User, Phone, Server } from 'lucide-react';
+import { X, ShieldCheck, ArrowRight, Building, Mail, User, Server } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface DemoModalProps {
 
 export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -72,13 +74,13 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
             <h3 className="text-2xl font-bold"
               style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
             >
-              Request Received
+              {t.demoModal.successTitle}
             </h3>
 
             <p className="text-xs sm:text-sm leading-relaxed max-w-md mx-auto"
               style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
             >
-              Thank you, <strong style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}>{formData.name}</strong>. An AEGIS senior security architect will review your environment details and reach out within 24 business hours to schedule your topology evaluation.
+              {t.demoModal.successMessage}
             </p>
 
             <div className="p-4 rounded-xl border text-xs font-mono text-left max-w-md mx-auto"
@@ -91,11 +93,11 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
               <div className="text-[11px] font-bold mb-1"
                 style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
               >
-                SUMMARY OF SUBMITTED SCOPE:
+                SUMMARY OF SCOPE:
               </div>
               <div>• Organization: {formData.company || 'Confidential'}</div>
-              <div>• Existing Edge: {formData.currentFirewall}</div>
-              <div>• User Tier: {formData.userCount}</div>
+              <div>• Edge: {formData.currentFirewall}</div>
+              <div>• Scale: {formData.userCount}</div>
             </div>
 
             <button
@@ -106,7 +108,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 color: theme === 'dark' ? '#020617' : '#FFFFFF',
               }}
             >
-              Return to Site
+              {t.demoModal.closeButton}
             </button>
           </div>
         ) : (
@@ -125,12 +127,12 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
               <h3 className="text-xl sm:text-2xl font-bold tracking-tight"
                 style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
               >
-                Schedule Technical Architecture Review
+                {t.demoModal.title}
               </h3>
               <p className="text-xs leading-relaxed mt-1"
                 style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
               >
-                Speak directly with an AEGIS security engineer to evaluate how our Zero-Trust reverse proxy gateway deploys into your specific infrastructure without downtime.
+                {t.demoModal.subtitle}
               </p>
             </div>
 
@@ -140,7 +142,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                   <label className="block text-xs font-mono font-semibold mb-1"
                     style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
                   >
-                    Full Name *
+                    {t.demoModal.fieldFullName} *
                   </label>
                   <div className="relative">
                     <User className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -149,7 +151,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                       required
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Alex Morgan"
+                      placeholder="Alex Morgan"
                       className="w-full pl-9 pr-3 py-2 rounded-xl border text-xs focus:outline-none transition-colors"
                       style={{
                         backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
@@ -164,7 +166,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                   <label className="block text-xs font-mono font-semibold mb-1"
                     style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
                   >
-                    Work Email *
+                    {t.demoModal.fieldEmail} *
                   </label>
                   <div className="relative">
                     <Mail className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -190,7 +192,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                   <label className="block text-xs font-mono font-semibold mb-1"
                     style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
                   >
-                    Company Name *
+                    {t.demoModal.fieldCompany} *
                   </label>
                   <div className="relative">
                     <Building className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -199,7 +201,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                       required
                       value={formData.company}
                       onChange={e => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="e.g. Acme Corp"
+                      placeholder="Acme Corp"
                       className="w-full pl-9 pr-3 py-2 rounded-xl border text-xs focus:outline-none transition-colors"
                       style={{
                         backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
@@ -214,7 +216,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                   <label className="block text-xs font-mono font-semibold mb-1"
                     style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
                   >
-                    Current Perimeter Edge
+                    {t.demoModal.fieldCurrentPerimeter}
                   </label>
                   <div className="relative">
                     <Server className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -243,7 +245,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 <label className="block text-xs font-mono font-semibold mb-1"
                   style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
                 >
-                  Active User Scale
+                  {t.demoModal.fieldOrgSize}
                 </label>
                 <select
                   value={formData.userCount}
@@ -271,7 +273,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                     color: theme === 'dark' ? '#020617' : '#FFFFFF',
                   }}
                 >
-                  <span>Submit Architecture Review Request</span>
+                  <span>{t.demoModal.submitButton}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -280,7 +282,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
             <div className="text-[11px] font-mono text-center"
               style={{ color: theme === 'dark' ? '#64748B' : '#94A3B8' }}
             >
-              Strict NDA guaranteed. No sales pressure — technical engineering discovery only.
+              {t.demoModal.privacyNotice}
             </div>
           </div>
         )}

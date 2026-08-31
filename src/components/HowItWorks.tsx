@@ -19,146 +19,150 @@ import {
   Database
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const HowItWorks: React.FC = () => {
   const { theme } = useTheme();
+  const { t, isRTL, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<'ingress' | 'containment'>('ingress');
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
   // Ingress Flow Steps (Mechanical walk-through of Traefik, Authelia, Keycloak)
+  const ingressStagesData = t.howItWorks.stages || [];
   const ingressSteps = [
     {
       id: 'step-1',
       number: '01',
-      title: 'Client Request Ingress & DNS Resolve',
-      subtitle: 'Employee initiates HTTPS call to internal service',
+      title: ingressStagesData[0]?.title || 'Ingress Packet Intercept',
+      subtitle: ingressStagesData[0]?.description || 'Browser connects to domain via TLS 1.3',
       target: 'https://dev.zerotrust.lan',
       actor: 'Employee Workstation / Browser',
       component: 'DNS & Edge Router',
-      details: 'Workstation sends TLS 1.3 request. Internal DNS resolves *.zerotrust.lan directly to Traefik reverse proxy IP (10.20.0.10). No client software or open VPN tunnel needed.',
-      securityAction: 'Client IP location confers zero access privileges. Request reaches gateway as untrusted ingress.',
+      details: ingressStagesData[0]?.technicalDetails || 'TLS 1.3 session termination',
+      securityAction: ingressStagesData[0]?.telemetryLog || 'Strict SNI inspection and protocol validation',
       logLine: '[INGRESS] TCP/443 connection accepted from 192.168.1.104 -> 10.20.0.10:443 (TLS_AES_256_GCM_SHA384)',
       status: 'verified'
     },
     {
       id: 'step-2',
       number: '02',
-      title: 'Edge PEP & ForwardAuth Interception',
-      subtitle: 'Traefik intercepts request before application layer',
+      title: ingressStagesData[1]?.title || 'Traefik ForwardAuth Intercept',
+      subtitle: ingressStagesData[1]?.description || 'Sub-request validation before proxying',
       target: 'Traefik Reverse Proxy (PEP)',
       actor: 'Edge Policy Enforcement Point',
       component: 'Traefik v3.x',
-      details: 'Traefik evaluates the host rule (Host(`dev.zerotrust.lan`)). The ForwardAuth middleware pauses packet forwarding and issues an internal sub-request to Authelia (/api/verify).',
-      securityAction: 'Upstream origin services have no public ports. Forwarding is blocked until cryptographic auth receipt is returned.',
+      details: ingressStagesData[1]?.technicalDetails || 'Synchronous ForwardAuth query',
+      securityAction: ingressStagesData[1]?.telemetryLog || 'Reverse proxy halts traffic until authorization decision returned',
       logLine: '[PEP] Traefik ForwardAuth triggered -> Forwarding auth query to authelia:9091/api/verify',
       status: 'verified'
     },
     {
       id: 'step-3',
       number: '03',
-      title: 'Session & MFA Validation',
-      subtitle: 'Authelia evaluates session token and 2FA status',
+      title: ingressStagesData[2]?.title || 'Authelia Session Validation',
+      subtitle: ingressStagesData[2]?.description || 'Cryptographic cookie & TOTP confirmation',
       target: 'Authelia Session Engine',
       actor: 'Session Authority',
       component: 'Authelia 4.x',
-      details: 'Authelia checks the Secure/HttpOnly session cookie. If valid and not expired, it extracts user identity and group claims. If missing or expired, Authelia redirects user to Keycloak SSO.',
-      securityAction: 'Enforces Hardware TOTP / FIDO2 WebAuthn. Plain password without 2FA is rejected.',
+      details: ingressStagesData[2]?.technicalDetails || 'Argon2id hashing & Redis cluster lookup',
+      securityAction: ingressStagesData[2]?.telemetryLog || 'Session signature verified against distributed Keycloak tokens',
       logLine: '[AUTHELIA] Session cookie validated: sub="karim.dev" groups=["Developers"] mfa_verified=true',
       status: 'verified'
     },
     {
       id: 'step-4',
       number: '04',
-      title: 'Path-Level RBAC Policy Evaluation',
-      subtitle: 'Granular policy check (e.g., policy: two_factor on /admin)',
+      title: ingressStagesData[3]?.title || 'Zero Trust ACL Evaluation',
+      subtitle: ingressStagesData[3]?.description || 'Least-privilege RBAC query',
       target: 'Access Control Policy Engine',
       actor: 'Keycloak & Authelia ACL Rules',
       component: 'RBAC Policy Matrix',
-      details: 'Authelia cross-checks the target path against access rules. For example, general /dev allows group "Developers". A restricted path like /admin requires group "juiceshop-admins" + MFA step-up re-prompt.',
-      securityAction: 'Enforces least-privilege. Any unauthorized path results in a clean 403 Forbidden with zero internal stack traces.',
+      details: ingressStagesData[3]?.technicalDetails || 'Microsegmentation ACL match',
+      securityAction: ingressStagesData[3]?.telemetryLog || 'Access granted based on least-privilege role matrix',
       logLine: '[ACL] Rule match: resource="/app/dashboard" allowed_for=["Developers"] -> ACCESS GRANTED (200 OK)',
       status: 'verified'
     },
     {
       id: 'step-5',
       number: '05',
-      title: 'Isolated Origin Forwarding',
-      subtitle: 'Upstream micro-segmented delivery',
+      title: ingressStagesData[4]?.title || 'Isolated Upstream Dispatch',
+      subtitle: ingressStagesData[4]?.description || 'Connection established to unrouted container',
       target: 'Internal Target Service',
       actor: 'Backend Microservice / Container',
       component: 'Isolated Origin Network',
-      details: 'Traefik attaches cryptographically signed headers (Remote-User: karim.dev, Remote-Groups: Developers) and forwards traffic to the internal container over an isolated bridge.',
-      securityAction: 'Origin container is physically unreachable from the LAN; only accepts proxy traffic from Traefik gateway network.',
+      details: ingressStagesData[4]?.technicalDetails || 'Internal Docker bridge routing',
+      securityAction: ingressStagesData[4]?.telemetryLog || 'Traffic forwarded to upstream with zero public IP exposure',
       logLine: '[FORWARD] Request forwarded to upstream 172.28.0.14:8080. Latency delta: 2.1ms. Zero trust verified.',
       status: 'verified'
     }
   ];
 
   // Containment Flow Steps (Continuous Telemetry & SOAR Incident Response)
+  const containmentStagesData = t.howItWorks.containmentStages || [];
   const containmentSteps = [
     {
       id: 'soar-1',
       number: '01',
-      title: 'Anomalous Event Stream Ingestion',
-      subtitle: 'Sensors detect suspicious credential use or lateral probe',
+      title: containmentStagesData[0]?.title || 'EDR Anomaly Detection',
+      subtitle: containmentStagesData[0]?.description || 'Impossible travel velocity / credential stuffing',
       target: 'Wazuh & Sysmon Agent Telemetry',
       actor: 'Endpoint & Gateway Sensors',
       component: 'Zone 4 Telemetry Stream',
-      details: 'Sysmon detects an unusual process spawning or impossible travel velocity (e.g. valid session token accessed concurrently from a secondary untrusted subnet).',
-      securityAction: 'Raw event stream ingested into Logstash pipeline with sub-second latency.',
+      details: containmentStagesData[0]?.technicalDetails || 'Real-time telemetry streaming into Elasticsearch',
+      securityAction: containmentStagesData[0]?.telemetryLog || 'Wazuh agent triggers MITRE ATT&CK severity flag',
       logLine: '[ALERT] Wazuh Rule 87103 triggered: Impossible velocity travel detected for user "j.doe" (IP: 185.220.101.5)',
       status: 'alert'
     },
     {
       id: 'soar-2',
       number: '02',
-      title: 'MITRE ATT&CK Mapping & Threat Intel',
-      subtitle: 'SIEM correlates event against known adversary TTPs',
+      title: containmentStagesData[1]?.title || 'SIEM Correlation & Threat Scoring',
+      subtitle: containmentStagesData[1]?.description || 'Automated rule matching against MISP feeds',
       target: 'ELK Correlation & MISP Feed',
       actor: 'AEGIS Correlation Engine',
       component: 'MISP Threat Intel',
-      details: 'Event tagged with MITRE ATT&CK T1078 (Valid Accounts) and T1046 (Network Service Discovery). MISP threat intelligence confirms source IP belongs to a known Tor exit node.',
-      securityAction: 'Confidence score elevated to Critical (98%). Escalation rule triggered for automated containment.',
+      details: containmentStagesData[1]?.technicalDetails || 'Cross-referencing IOC hashes & known actor IPs',
+      securityAction: containmentStagesData[1]?.telemetryLog || 'Correlates behavioral flags with open incident databases',
       logLine: '[CORRELATION] Event mapped to MITRE T1078.2 + MISP IoC #44921 -> Severity: CRITICAL',
       status: 'alert'
     },
     {
       id: 'soar-3',
       number: '03',
-      title: 'Automated Session Termination (SOAR)',
-      subtitle: 'Active session revoked globally across all gateways in < 5s',
+      title: containmentStagesData[2]?.title || 'Automated Session Termination',
+      subtitle: containmentStagesData[2]?.description || 'Instant revocation across Authelia and Keycloak',
       target: 'Keycloak & Authelia API',
       actor: 'AEGIS Automated Containment Engine',
       component: 'SOAR Action Dispatcher',
-      details: 'The SOAR engine invokes Keycloak and Authelia administrative revocation APIs via mutual-TLS, immediately invalidating the user’s active JWTs and session cookies across all clusters.',
-      securityAction: 'Live attacker session is terminated immediately. Stolen cookies become worthless.',
+      details: containmentStagesData[2]?.technicalDetails || 'Automated API token flush in sub-2 seconds',
+      securityAction: containmentStagesData[2]?.telemetryLog || 'User token invalidated on edge Traefik instances simultaneously',
       logLine: '[SOAR] Action dispatched: RevokeUserSessions(uid="j.doe") -> Authelia & Keycloak session invalidated in 1.4s',
       status: 'alert'
     },
     {
       id: 'soar-4',
       number: '04',
-      title: 'Network Quarantine & Host Isolation',
-      subtitle: 'Compromised endpoint isolated from LAN communication',
+      title: containmentStagesData[3]?.title || 'Kernel Micro-Isolation',
+      subtitle: containmentStagesData[3]?.description || 'Host quarantine & lateral movement blockage',
       target: 'Host Network Interface',
       actor: 'Wazuh Active Response Agent',
       component: 'Kernel Firewall (nftables)',
-      details: 'Wazuh active response executes on the endpoint: blocks all outbound and lateral TCP/UDP packets except encrypted telemetry communication with the AEGIS SOC controller.',
-      securityAction: 'Adversary cannot pivot laterally to database subnets or unmanaged internal endpoints.',
+      details: containmentStagesData[3]?.technicalDetails || 'Applying nftables drop rules at Linux kernel level',
+      securityAction: containmentStagesData[3]?.telemetryLog || 'Infected endpoint isolated from all private internal subnets',
       logLine: '[ACTIVE-RESPONSE] Executed host-quarantine.sh on host-win11-042. Lateral traffic blocked.',
       status: 'verified'
     },
     {
       id: 'soar-5',
       number: '05',
-      title: 'Tiered MSSP Incident Escalation',
-      subtitle: '24/7 SOC analyst confirms triage; client IT notified',
+      title: containmentStagesData[4]?.title || 'SOC Analyst Triage & IT Notification',
+      subtitle: containmentStagesData[4]?.description || 'Curated incident report with zero alert fatigue',
       target: 'Client IT Incident Portal & SMS',
       actor: 'Tier 1 AEGIS SOC Analyst',
       component: 'Curated Client Console',
-      details: 'AEGIS Tier 1 analyst reviews incident in Kibana, confirms automated containment success, and transmits a clear executive incident brief with zero raw alert noise to client IT leadership.',
-      securityAction: 'Client team receives high-fidelity remediation guidance without drowning in thousands of raw logs.',
+      details: containmentStagesData[4]?.technicalDetails || 'Human-in-the-loop validation & executive escalation',
+      securityAction: containmentStagesData[4]?.telemetryLog || 'Incident ticket created with full forensic audit artifacts',
       logLine: '[ESCALATION] Case #AEGIS-INC-9102 dispatched to Client IT Lead: "Session terminated, host quarantined. Zero data exfiltrated."',
       status: 'verified'
     }
@@ -191,18 +195,17 @@ export const HowItWorks: React.FC = () => {
             }}
           >
             <Activity className="w-3.5 h-3.5" />
-            <span>INTERACTIVE ARCHITECTURAL PIPELINE</span>
+            <span>{t.howItWorks.badge}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight"
             style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
           >
-            How AEGIS Works: Request Ingress &amp; Active Containment
+            {t.howItWorks.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed"
             style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
           >
-            Zero Trust is not an abstract philosophy — it is a deterministic, high-speed engineering pipeline. 
-            Follow the exact journey of a web request entering the gateway, or explore how automated SOAR contains live threats in under 5 seconds.
+            {t.howItWorks.subtitle}
           </p>
         </div>
 
@@ -230,7 +233,7 @@ export const HowItWorks: React.FC = () => {
               }}
             >
               <Lock className="w-3.5 h-3.5" />
-              <span>Flow 1: Request Ingress &amp; Verification</span>
+              <span>{t.howItWorks.tabStandard}</span>
             </button>
 
             <button
@@ -249,7 +252,7 @@ export const HowItWorks: React.FC = () => {
               }}
             >
               <Zap className="w-3.5 h-3.5" />
-              <span>Flow 2: Continuous Telemetry &amp; SOAR Response</span>
+              <span>{t.howItWorks.tabContainment}</span>
             </button>
           </div>
 
@@ -267,12 +270,12 @@ export const HowItWorks: React.FC = () => {
               {isPlaying ? (
                 <>
                   <Pause className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Pause Walkthrough</span>
+                  <span>{language === 'fr' ? 'Pause' : language === 'ar' ? 'إيقاف مؤقت' : 'Pause'}</span>
                 </>
               ) : (
                 <>
                   <Play className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Auto-Play Pipeline</span>
+                  <span>{language === 'fr' ? 'Lecture' : language === 'ar' ? 'تشغيل' : 'Play'}</span>
                 </>
               )}
             </button>
@@ -447,7 +450,7 @@ export const HowItWorks: React.FC = () => {
                   <strong className="block text-xs font-mono mb-1"
                     style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
                   >
-                    SECURITY ENFORCEMENT GUARANTEE
+                    {language === 'fr' ? 'GARANTIE DE SÉCURITÉ / RÈGLE EN VIGUEUR' : language === 'ar' ? 'ضمان الأمان / القاعدة المطبقة' : 'SECURITY GUARANTEE / ENFORCED RULE'}
                   </strong>
                   <p className="text-xs leading-relaxed"
                     style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}
@@ -478,7 +481,7 @@ export const HowItWorks: React.FC = () => {
                     color: theme === 'dark' ? '#CBD5E1' : '#334155',
                   }}
                 >
-                  ← Prev Step
+                  {isRTL ? 'التالي ←' : '← Prev Step'}
                 </button>
                 <button
                   disabled={currentStep === steps.length - 1}
@@ -493,14 +496,14 @@ export const HowItWorks: React.FC = () => {
                     color: theme === 'dark' ? '#CBD5E1' : '#334155',
                   }}
                 >
-                  Next Step →
+                  {isRTL ? '→ السابق' : 'Next Step →'}
                 </button>
               </div>
 
               <span className="text-xs font-mono"
                 style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
               >
-                Pipeline Progress: {currentStep + 1} of {steps.length}
+                Progress: {currentStep + 1} / {steps.length}
               </span>
             </div>
           </div>
