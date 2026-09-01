@@ -975,7 +975,9 @@ export const arContent: UIContent = {
     resourcesTitle: 'المصادر والتوثيق',
     legalNote: 'صُممت AEGIS للنشر في بيئات الإنتاج السحابية الهجينة والبيئات المحلية (On-Premise). مبنية على معايير مفتوحة (Traefik و Authelia و Keycloak و Coraza و Wazuh و Sysmon).',
     builtWith: 'هندسة دقيقة لحماية أمن المنشآت الحيوية والمؤسسات',
-    rightsReserved: 'جميع الحقوق محفوظة. معمارية انعدام الثقة هي رحلة مستمرة وليست مجرد منتج منفرد.'
+    rightsReserved: 'جميع الحقوق محفوظة. معمارية انعدام الثقة هي رحلة مستمرة وليست مجرد منتج منفرد.',
+    downloadSummary: 'تحميل الملخص التنفيذي (PDF)',
+    downloadSummaryDesc: 'طباعة أو حفظ ملخص تنفيذي مبسط لعروض أصحاب المصلحة ومجلس الإدارة',
   },
   demoModal: {
     title: 'طلب مراجعة معمارية AEGIS',

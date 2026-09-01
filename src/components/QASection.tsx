@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Search, CheckCircle2, Shield, ArrowRight, BookOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search, CheckCircle2, Shield, ArrowRight, BookOpen, Bot, Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -74,7 +74,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
         </div>
 
         {/* Executive Summary Card */}
-        <div className="mt-10 p-6 sm:p-8 rounded-2xl border backdrop-blur-md"
+        <div className="aegis-card mt-10 p-6 sm:p-8 rounded-2xl border backdrop-blur-md"
           style={{
             backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.05)' : '#F0F9FF',
             borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.2)' : '#BAE6FD',
@@ -159,7 +159,7 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
               return (
                 <div
                   key={item.id}
-                  className="rounded-2xl border transition-all overflow-hidden"
+                  className="aegis-card rounded-2xl border transition-all overflow-hidden"
                   style={{
                     backgroundColor: isOpen
                       ? (theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF')
@@ -258,6 +258,53 @@ export const QASection: React.FC<QASectionProps> = ({ onOpenDemoModal }) => {
               );
             })
           )}
+        </div>
+
+        {/* Interactive AI Architecture Inquiries Card */}
+        <div className="mt-8 p-5 sm:p-6 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-4 transition-all aegis-card"
+          style={{
+            backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.04)' : '#F0F9FF',
+            borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.25)' : '#BAE6FD',
+          }}
+        >
+          <div className="flex items-start gap-3.5">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center border shadow-sm shrink-0"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.12)' : '#E0F2FE',
+                borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.3)' : '#BAE6FD',
+                color: theme === 'dark' ? '#38BDF8' : '#0284C7',
+              }}
+            >
+              <Bot className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-sm font-bold font-mono" style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}>
+                  Have a specific Zero-Trust or codebase question?
+                </h4>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-sky-500/10 border border-sky-500/20 text-sky-400 font-bold">
+                  Gemini AI
+                </span>
+              </div>
+              <p className="text-xs mt-1 leading-relaxed" style={{ color: theme === 'dark' ? '#94A3B8' : '#475569' }}>
+                Ask the AEGIS Intelligence AI for deep reasoning on Traefik routing, Keycloak RBAC, Coraza WAF rules, or NIST SP 800-207 compliance.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-aegis-chat', { detail: { initialPrompt: 'Can you summarize how AEGIS 2.1v maps to the NIST SP 800-207 Zero-Trust Architecture tenets?' } }))}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs font-mono shrink-0 transition-all shadow-sm active:scale-95 whitespace-nowrap"
+            style={{
+              backgroundColor: theme === 'dark' ? '#38BDF8' : '#0284C7',
+              color: theme === 'dark' ? '#0F172A' : '#FFFFFF',
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Ask Architecture AI</span>
+          </button>
         </div>
 
         {/* Schedule Review Consultation Banner */}

@@ -204,6 +204,8 @@ export interface UIContent {
     legalNote: string;
     builtWith: string;
     rightsReserved: string;
+    downloadSummary: string;
+    downloadSummaryDesc: string;
   };
   demoModal: {
     title: string;

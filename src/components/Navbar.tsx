@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Menu, X, ArrowRight, ExternalLink, Sun, Moon, Globe } from 'lucide-react';
+import { Shield, Menu, X, ArrowRight, ExternalLink, Sun, Moon, Globe, Bot } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage, Language } from '../context/LanguageContext';
 
@@ -186,6 +186,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             <span>{t.nav.githubSpec}</span>
           </a>
 
+          {/* Ask AEGIS AI Trigger */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-aegis-chat'))}
+            id="nav-ask-ai-btn"
+            aria-label="Ask AEGIS AI"
+            title="Ask AEGIS Architecture AI"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.1)' : '#F0F9FF',
+              borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.3)' : '#BAE6FD',
+              color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+            }}
+          >
+            <Bot className="w-3.5 h-3.5 text-sky-400" />
+            <span className="font-bold">Ask AI</span>
+          </button>
+
           {/* Request Architecture Review CTA */}
           <button
             onClick={onOpenDemoModal}
@@ -328,6 +346,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
             }}
           >
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.dispatchEvent(new CustomEvent('open-aegis-chat'));
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2 rounded-lg font-mono text-xs font-bold border transition-all"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.12)' : '#F0F9FF',
+                borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.3)' : '#BAE6FD',
+                color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+              }}
+            >
+              <Bot className="w-4 h-4 text-sky-400" />
+              <span>Ask AEGIS AI (Gemini)</span>
+            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

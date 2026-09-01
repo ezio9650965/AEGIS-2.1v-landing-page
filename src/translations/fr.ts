@@ -975,7 +975,9 @@ export const frContent: UIContent = {
     resourcesTitle: 'Ressources & Documentation',
     legalNote: 'AEGIS est conçue pour un déploiement en production dans des environnements cloud hybrides et sur site. Repose sur des standards ouverts (Traefik, Authelia, Keycloak, Coraza, Wazuh, Sysmon).',
     builtWith: 'Conçu avec Rigueur pour la Défense des Entreprises',
-    rightsReserved: 'Tous droits réservés. Le Zero Trust est une démarche architecturale continue, pas un simple produit logiciel.'
+    rightsReserved: 'Tous droits réservés. Le Zero Trust est une démarche architecturale continue, pas un simple produit logiciel.',
+    downloadSummary: 'Télécharger la Synthèse (PDF)',
+    downloadSummaryDesc: 'Imprimer ou exporter une synthèse claire pour les présentations de direction',
   },
   demoModal: {
     title: 'Demander un Audit d’Architecture AEGIS',

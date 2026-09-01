@@ -378,7 +378,9 @@ export const enContent: UIContent = {
     resourcesTitle: 'Resources & Docs',
     legalNote: 'AEGIS is designed for production deployment across hybrid cloud and on-premise environments. Built on open-source standards (Traefik, Authelia, Keycloak, Coraza, Wazuh, Sysmon).',
     builtWith: 'Engineered with Precision for Enterprise Defense',
-    rightsReserved: 'All rights reserved. Zero Trust is a continuous architecture, not a single product.'
+    rightsReserved: 'All rights reserved. Zero Trust is a continuous architecture, not a single product.',
+    downloadSummary: 'Download Summary (PDF)',
+    downloadSummaryDesc: 'Print or save a clean executive summary for stakeholder presentations',
   },
   demoModal: {
     title: 'Request AEGIS Architecture Review',

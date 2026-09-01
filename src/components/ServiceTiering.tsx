@@ -42,7 +42,7 @@ export const ServiceTiering: React.FC = () => {
         {/* 2-Tier Architecture Diagram */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Tier 1: AEGIS Dedicated SOC Operations */}
-          <div className="lg:col-span-6 p-6 sm:p-8 rounded-2xl border flex flex-col justify-between backdrop-blur-md"
+          <div className="aegis-card lg:col-span-6 p-6 sm:p-8 rounded-2xl border flex flex-col justify-between backdrop-blur-md"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
@@ -114,7 +114,7 @@ export const ServiceTiering: React.FC = () => {
           </div>
 
           {/* Tier 2: Client IT / DevOps Portal */}
-          <div className="lg:col-span-6 p-6 sm:p-8 rounded-2xl border flex flex-col justify-between backdrop-blur-md"
+          <div className="aegis-card lg:col-span-6 p-6 sm:p-8 rounded-2xl border flex flex-col justify-between backdrop-blur-md"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',

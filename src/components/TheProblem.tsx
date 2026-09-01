@@ -58,7 +58,7 @@ export const TheProblem: React.FC = () => {
           {t.theProblem.vulnerabilities.map((vuln) => (
             <div 
               key={vuln.id}
-              className="p-6 rounded-2xl border flex flex-col justify-between transition-all backdrop-blur-md hover:border-red-500/40"
+              className="aegis-card p-6 rounded-2xl border flex flex-col justify-between transition-all backdrop-blur-md hover:border-red-500/40"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
                 borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',

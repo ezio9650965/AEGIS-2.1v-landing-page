@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Lock, ArrowRight, CheckCircle2, ShieldAlert, Cpu, Terminal, ExternalLink } from 'lucide-react';
+import { Shield, Lock, ArrowRight, CheckCircle2, ShieldAlert, Cpu, Terminal, ExternalLink, Bot } from 'lucide-react';
 import { NetworkGraph } from './NetworkGraph';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
   const { t, isRTL } = useLanguage();
 
   return (
-    <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <section id="hero" className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
       {/* Background Subtle Grid with theme-adjusted opacity */}
       <div 
         className="absolute inset-0 aegis-grid-bg pointer-events-none"
@@ -135,6 +135,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
                 >
                   {t.hero.ctaSecondary}
                 </a>
+
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-aegis-chat'))}
+                  id="hero-ask-ai-cta"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border text-xs sm:text-sm font-mono backdrop-blur-md transition-all whitespace-nowrap active:scale-95"
+                  style={{
+                    backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.08)' : '#F0F9FF',
+                    borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.3)' : '#BAE6FD',
+                    color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+                  }}
+                >
+                  <Bot className="w-4 h-4 text-sky-400" />
+                  <span>Ask Architecture AI</span>
+                </button>
               </div>
 
               {/* Smaller, distinct link to the full technical blueprint report */}

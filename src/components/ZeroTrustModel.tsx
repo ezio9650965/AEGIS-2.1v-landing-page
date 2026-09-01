@@ -56,7 +56,7 @@ export const ZeroTrustModel: React.FC = () => {
             return (
               <div 
                 key={pillar.title}
-                className="p-6 rounded-2xl border flex flex-col justify-between transition-all duration-300 backdrop-blur-md"
+                className="aegis-card p-6 rounded-2xl border flex flex-col justify-between transition-all duration-300 backdrop-blur-md"
                 style={{
                   backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.04)' : '#FFFFFF',
                   borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
@@ -117,7 +117,7 @@ export const ZeroTrustModel: React.FC = () => {
           })}
 
           {/* Beyond BeyondCorp Deep Dive Card */}
-          <div className="p-6 rounded-2xl border flex flex-col justify-between transition-all duration-300 backdrop-blur-md"
+          <div className="aegis-card p-6 rounded-2xl border flex flex-col justify-between transition-all duration-300 backdrop-blur-md"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.1)' : '#F0F9FF',
               borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.3)' : '#BAE6FD',

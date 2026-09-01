@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, ExternalLink } from 'lucide-react';
+import { ArrowUp, ExternalLink, Printer, FileDown } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -9,6 +9,10 @@ export const Footer: React.FC = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePrintSummary = () => {
+    window.print();
   };
 
   const backToTopLabel = language === 'fr' ? 'Haut de page' : language === 'ar' ? 'العودة للأعلى' : 'Back to top';
@@ -22,6 +26,53 @@ export const Footer: React.FC = () => {
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Executive Presentation Summary Download Banner (Screen Only) */}
+        <div className="mb-10 p-4 sm:p-5 rounded-2xl border transition-all duration-300 print:hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          style={{
+            backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.65)' : '#FFFFFF',
+            borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.2)' : '#CBD5E1',
+            boxShadow: theme === 'dark' ? '0 4px 20px -2px rgba(0, 0, 0, 0.5)' : '0 2px 8px -2px rgba(0, 0, 0, 0.05)',
+          }}
+        >
+          <div className="flex items-start sm:items-center gap-3.5">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.12)' : '#E0F2FE',
+                color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+                border: theme === 'dark' ? '1px solid rgba(56, 189, 248, 0.25)' : '1px solid #BAE6FD',
+              }}
+            >
+              <FileDown className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm font-bold font-mono tracking-tight"
+                style={{ color: theme === 'dark' ? '#F8FAFC' : '#0F172A' }}
+              >
+                {t.footer.downloadSummary}
+              </div>
+              <p className="text-xs mt-0.5"
+                style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
+              >
+                {t.footer.downloadSummaryDesc}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={handlePrintSummary}
+            id="download-summary-footer-btn"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all shadow-sm active:scale-95 shrink-0"
+            style={{
+              backgroundColor: theme === 'dark' ? '#06B6D4' : '#0369A1',
+              color: theme === 'dark' ? '#020617' : '#FFFFFF',
+            }}
+            title={t.footer.downloadSummary}
+          >
+            <Printer className="w-4 h-4" />
+            <span>{t.footer.downloadSummary}</span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Brand & Philosophy */}
           <div className="md:col-span-2 space-y-4">
@@ -123,7 +174,16 @@ export const Footer: React.FC = () => {
           <div>
             &copy; {new Date().getFullYear()} AEGIS Security Systems. {t.footer.rightsReserved}
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 print:hidden">
+            <button
+              onClick={handlePrintSummary}
+              className="inline-flex items-center gap-1.5 hover:text-cyan-400 transition-colors"
+              title={t.footer.downloadSummary}
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>{t.footer.downloadSummary}</span>
+            </button>
+            <span>•</span>
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
@@ -133,7 +193,16 @@ export const Footer: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Clean Print-Only Metadata Footer */}
+        <div className="hidden print:block mt-8 pt-4 border-t text-[9pt] font-mono text-slate-600 border-slate-300">
+          <div className="flex justify-between items-center">
+            <span>AEGIS 2.1v Enterprise Architecture Summary • NIST SP 800-207 Aligned</span>
+            <span>Confidential • Prepared for Stakeholder Review</span>
+          </div>
+        </div>
       </div>
     </footer>
   );
 };
+

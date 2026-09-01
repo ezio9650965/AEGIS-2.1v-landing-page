@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
@@ -15,10 +15,34 @@ import { InstallationSteps } from './components/InstallationSteps';
 import { QASection } from './components/QASection';
 import { Footer } from './components/Footer';
 import { DemoModal } from './components/DemoModal';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
+import { BackToTop } from './components/BackToTop';
+import { FadeInSection } from './components/FadeInSection';
+import { SectionDivider } from './components/SectionDivider';
+import { AegisChatbot } from './components/AegisChatbot';
 
 function MainApp() {
   const { theme } = useTheme();
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+
+  // Global cursor coordinate tracker for .aegis-card interactive radial glow
+  useEffect(() => {
+    const handlePointerMove = (e: PointerEvent) => {
+      const card = (e.target as HTMLElement)?.closest('.aegis-card, .aegis-card-subtle') as HTMLElement | null;
+      if (card) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      }
+    };
+
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+    };
+  }, []);
 
   const handleOpenDemoModal = () => {
     setDemoModalOpen(true);
@@ -36,6 +60,9 @@ function MainApp() {
         color: theme === 'dark' ? '#E2E8F0' : '#0F172A',
       }}
     >
+      {/* Slim Scroll Progress Bar at very top of viewport */}
+      <ScrollProgressBar />
+
       {/* Background ambient lighting accents */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div 
@@ -63,47 +90,116 @@ function MainApp() {
 
       {/* Main Content Sections (In complete structured flow) */}
       <main className="relative z-10">
+        {/* Executive Print Header (Visible ONLY during print / PDF export) */}
+        <div className="hidden print:block pb-6 mb-6 border-b-2 border-slate-900 px-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-2xl font-mono font-extrabold text-slate-900 tracking-tight">
+                AEGIS 2.1v <span className="text-sky-700">SECURITY PLATFORM</span>
+              </div>
+              <div className="text-sm font-mono font-semibold text-slate-800 mt-1">
+                Zero-Trust Application Access & MSSP SOC Architecture Blueprint
+              </div>
+            </div>
+            <div className="text-right text-xs font-mono text-slate-600">
+              <div className="font-bold text-slate-900">NIST SP 800-207 ALIGNED</div>
+              <div>Executive Briefing Summary</div>
+              <div>Open-Source Foundation (Traefik • Keycloak • Wazuh)</div>
+            </div>
+          </div>
+        </div>
+
         {/* Section 1: Hero */}
         <Hero onOpenDemoModal={handleOpenDemoModal} />
 
+        <SectionDivider />
+
         {/* Section 2: The Problem */}
-        <TheProblem />
+        <FadeInSection>
+          <TheProblem />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 3: What AEGIS Is */}
-        <WhatAegisIs />
+        <FadeInSection>
+          <WhatAegisIs />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 4: How It Works (Ingress & Containment Animated Pipeline) */}
-        <HowItWorks />
+        <FadeInSection>
+          <HowItWorks />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 5: Comparison Table (Firewall vs VPN vs AEGIS) */}
-        <ComparisonTable onOpenDemoModal={handleOpenDemoModal} />
+        <FadeInSection>
+          <ComparisonTable onOpenDemoModal={handleOpenDemoModal} />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 6: The Zero-Trust Model, Explained */}
-        <ZeroTrustModel />
+        <FadeInSection>
+          <ZeroTrustModel />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 7: Employee Experience & RBAC */}
-        <EmployeeExperience />
+        <FadeInSection>
+          <EmployeeExperience />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 8: Karim Onboarding Walkthrough (8-Step Monday Journey) */}
-        <OnboardingWalkthrough />
+        <FadeInSection>
+          <OnboardingWalkthrough />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 9: MSSP SOC Service Tiering */}
-        <ServiceTiering />
+        <FadeInSection>
+          <ServiceTiering />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 10: Installation / Integration Phased Roadmap */}
-        <InstallationSteps onOpenDemoModal={handleOpenDemoModal} />
+        <FadeInSection>
+          <InstallationSteps onOpenDemoModal={handleOpenDemoModal} />
+        </FadeInSection>
+
+        <SectionDivider />
 
         {/* Section 11: Business & Security FAQ */}
-        <QASection onOpenDemoModal={handleOpenDemoModal} />
+        <FadeInSection>
+          <QASection onOpenDemoModal={handleOpenDemoModal} />
+        </FadeInSection>
       </main>
+
+      <SectionDivider />
 
       {/* Section 12: Footer / Contact */}
       <div className="relative z-10">
-        <Footer />
+        <FadeInSection>
+          <Footer />
+        </FadeInSection>
       </div>
 
       {/* Interactive Consultation / Demo Request Modal */}
       <DemoModal isOpen={demoModalOpen} onClose={handleCloseDemoModal} />
+
+      {/* Floating Circular Back to Top Button */}
+      <BackToTop />
+
+      {/* Interactive AI Intelligence Chatbot (Gemini-powered) */}
+      <AegisChatbot />
     </div>
   );
 }
