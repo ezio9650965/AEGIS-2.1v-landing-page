@@ -14,6 +14,7 @@ export const arContent: UIContent = {
     darkMode: 'الوضع الداكن',
     githubSpec: 'المواصفات على GitHub',
     language: 'اللغة',
+    lastUpdated: 'تحديث سبتمبر 2026',
   },
   hero: {
     badgeVersion: 'AEGIS 2.1v',
@@ -27,7 +28,8 @@ export const arContent: UIContent = {
     guarantee3: 'احتواء آلي فوري للتهديدات في أقل من 5 ثوانٍ',
     guarantee4: 'صفر رسوم اشتراك إضافية لكل مستخدم',
     ctaPrimary: 'طلب مراجعة معمارية مخصصة',
-    ctaSecondary: 'استكشاف مسار تدفق الطلبات',
+    ctaSecondary: 'شاهد كيف تعمل المنظومة',
+    reportLink: 'قراءة التقرير الفني الكامل',
     openSourceNote: '* مبني على أسس مفتوحة المصدر (Traefik و Authelia و Keycloak و Wazuh و Sysmon) دون أي احتكار تجاري.',
     liveTrafficStatus: 'مسار تدفق وفحص الطلبات المباشر',
     activeSessions: 'الجلسات الموثقة',

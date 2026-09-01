@@ -14,6 +14,7 @@ export const frContent: UIContent = {
     darkMode: 'Mode Sombre',
     githubSpec: 'Spécification GitHub',
     language: 'Langue',
+    lastUpdated: 'Mis à jour sept. 2026',
   },
   hero: {
     badgeVersion: 'AEGIS 2.1v',
@@ -27,7 +28,8 @@ export const frContent: UIContent = {
     guarantee3: 'Confinement Automatisé en Moins de 5s',
     guarantee4: 'Zéro Redevance SaaS par Utilisateur',
     ctaPrimary: 'Demander un Audit d’Architecture',
-    ctaSecondary: 'Explorer le Pipeline d’Ingress',
+    ctaSecondary: 'Découvrir le fonctionnement',
+    reportLink: 'Lire le rapport technique complet',
     openSourceNote: '* Repose sur des standards open-source (Traefik, Authelia, Keycloak, Wazuh, Sysmon). Aucun verrouillage propriétaire.',
     liveTrafficStatus: 'PIPELINE D’INGRESS EN DIRECT',
     activeSessions: 'Sessions Authentifiées',

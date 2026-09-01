@@ -16,6 +16,7 @@ export interface UIContent {
     darkMode: string;
     githubSpec: string;
     language: string;
+    lastUpdated: string;
   };
   hero: {
     badgeVersion: string;
@@ -30,6 +31,7 @@ export interface UIContent {
     guarantee4: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    reportLink: string;
     openSourceNote: string;
     liveTrafficStatus: string;
     activeSessions: string;

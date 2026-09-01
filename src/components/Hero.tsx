@@ -108,31 +108,56 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal }) => {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <button
-                onClick={onOpenDemoModal}
-                id="hero-primary-cta"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-mono text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95"
-                style={{
-                  backgroundColor: theme === 'dark' ? '#06B6D4' : '#0369A1',
-                  color: theme === 'dark' ? '#020617' : '#FFFFFF',
-                }}
-              >
-                <span>{t.hero.ctaPrimary}</span>
-                <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-              </button>
+            <div className="space-y-3 pt-4">
+              <div className="flex flex-wrap items-center gap-3.5">
+                <button
+                  onClick={onOpenDemoModal}
+                  id="hero-primary-cta"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-mono text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 whitespace-nowrap"
+                  style={{
+                    backgroundColor: theme === 'dark' ? '#06B6D4' : '#0369A1',
+                    color: theme === 'dark' ? '#020617' : '#FFFFFF',
+                  }}
+                >
+                  <span>{t.hero.ctaPrimary}</span>
+                  <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+                </button>
 
-              <a
-                href="#how-it-works"
-                className="px-5 py-3.5 rounded-xl border text-xs sm:text-sm font-mono backdrop-blur-md transition-all"
-                style={{
-                  backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF',
-                  borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : '#CBD5E1',
-                  color: theme === 'dark' ? '#F8FAFC' : '#0F172A',
-                }}
-              >
-                {t.hero.ctaSecondary}
-              </a>
+                <a
+                  href="#how-it-works"
+                  id="hero-secondary-cta"
+                  className="inline-flex items-center justify-center px-5 py-3.5 rounded-xl border text-xs sm:text-sm font-mono backdrop-blur-md transition-all whitespace-nowrap"
+                  style={{
+                    backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#FFFFFF',
+                    borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.12)' : '#CBD5E1',
+                    color: theme === 'dark' ? '#F8FAFC' : '#0F172A',
+                  }}
+                >
+                  {t.hero.ctaSecondary}
+                </a>
+              </div>
+
+              {/* Smaller, distinct link to the full technical blueprint report */}
+              <div className="pt-0.5">
+                <a
+                  href="https://aegis-v2-1-project-report-blueprint-723554623670.europe-west2.run.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="hero-technical-report-link"
+                  className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-mono transition-all duration-200"
+                  style={{
+                    color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+                  }}
+                >
+                  <span className="group-hover:underline underline-offset-4 decoration-1">
+                    {t.hero.reportLink}
+                  </span>
+                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+                    {isRTL ? '←' : '→'}
+                  </span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-80 group-hover:opacity-100 shrink-0" />
+                </a>
+              </div>
             </div>
 
             {/* Honest Technical Notice */}

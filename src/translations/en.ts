@@ -15,6 +15,7 @@ export const enContent: UIContent = {
     darkMode: 'Dark Mode',
     githubSpec: 'GitHub Spec',
     language: 'Language',
+    lastUpdated: 'Updated Sep 2026',
   },
   hero: {
     badgeVersion: 'AEGIS 2.1v',
@@ -28,7 +29,8 @@ export const enContent: UIContent = {
     guarantee3: '< 5s Automated Threat Containment',
     guarantee4: 'Zero Per-Seat SaaS Taxes',
     ctaPrimary: 'Request Architecture Review',
-    ctaSecondary: 'Explore Ingress Pipeline',
+    ctaSecondary: 'See How It Works',
+    reportLink: 'Read the Full Technical Report',
     openSourceNote: '* Built on open-source foundations (Traefik, Authelia, Keycloak, Wazuh, Sysmon). No proprietary lock-in.',
     liveTrafficStatus: 'LIVE INGRESS PIPELINE',
     activeSessions: 'Verified Sessions',

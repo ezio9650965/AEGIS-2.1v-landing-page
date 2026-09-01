@@ -36,10 +36,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand Logo & Revision */}
+        {/* Brand Logo, Version & Last Updated Badge */}
         <div className="flex items-center gap-3">
           <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300"
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 shrink-0"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.12)' : '#E0F2FE',
                 borderColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.25)' : '#BAE6FD',
@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             >
               <Shield className="w-4 h-4" />
             </div>
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-center gap-2">
               <span className="font-mono text-base font-extrabold tracking-wider"
                 style={{ color: theme === 'dark' ? '#FFFFFF' : '#0F172A' }}
               >
@@ -63,6 +63,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
                 }}
               >
                 2.1v
+              </span>
+              {/* Freshness / Last Updated indicator */}
+              <span 
+                className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded border tracking-tight"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'rgba(56, 189, 248, 0.06)' : '#F8FAFC',
+                  color: theme === 'dark' ? '#94A3B8' : '#64748B',
+                  borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0',
+                }}
+                title={t.nav.lastUpdated}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 animate-pulse" />
+                <span>{t.nav.lastUpdated}</span>
               </span>
             </div>
           </a>
@@ -161,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
           <a
             href="https://github.com/ezio9650965/AEGIS-2.1v-overview.git"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all duration-200"
             style={{
               backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : '#FFFFFF',
@@ -251,6 +264,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
           }}
         >
+          <div className="pb-2 flex items-center justify-between border-b"
+            style={{
+              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0',
+            }}
+          >
+            <span className="text-[10px] font-mono font-medium flex items-center gap-1.5"
+              style={{ color: theme === 'dark' ? '#94A3B8' : '#64748B' }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 animate-pulse" />
+              <span>{t.nav.lastUpdated}</span>
+            </span>
+          </div>
+
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -265,7 +291,39 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemoModal }) => {
             </a>
           ))}
 
-          <div className="pt-3 border-t flex flex-col gap-2"
+          {/* External links in mobile menu */}
+          <div className="pt-2 border-t space-y-2"
+            style={{
+              borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#E2E8F0',
+            }}
+          >
+            <a
+              href="https://aegis-v2-1-project-report-blueprint-723554623670.europe-west2.run.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between text-xs font-mono py-1.5"
+              style={{
+                color: theme === 'dark' ? '#38BDF8' : '#0369A1',
+              }}
+            >
+              <span>{t.hero.reportLink}</span>
+              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+            </a>
+            <a
+              href="https://github.com/ezio9650965/AEGIS-2.1v-overview.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between text-xs font-mono py-1.5"
+              style={{
+                color: theme === 'dark' ? '#94A3B8' : '#64748B',
+              }}
+            >
+              <span>{t.nav.githubSpec}</span>
+              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+            </a>
+          </div>
+
+          <div className="pt-2 border-t flex flex-col gap-2"
             style={{
               borderColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#E2E8F0',
             }}

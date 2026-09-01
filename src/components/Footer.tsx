@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ExternalLink } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & Philosophy */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs"
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs shrink-0"
                 style={{
                   backgroundColor: theme === 'dark' ? '#06B6D4' : '#0369A1',
                   color: theme === 'dark' ? '#020617' : '#FFFFFF',
@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Operations & Support */}
+          {/* Col 3: Operations, Resources & Support */}
           <div>
             <div className="text-xs font-mono font-bold uppercase mb-3"
               style={{ color: theme === 'dark' ? '#CBD5E1' : '#334155' }}
@@ -85,6 +85,29 @@ export const Footer: React.FC = () => {
               <li><a href="#service-tiering" className="hover:underline">{t.nav.msspSoc}</a></li>
               <li><a href="#employee-experience" className="hover:underline">{t.nav.roleExperience}</a></li>
               <li><a href="#installation" className="hover:underline">{t.installation.badge}</a></li>
+              <li>
+                <a
+                  href="https://aegis-v2-1-project-report-blueprint-723554623670.europe-west2.run.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline inline-flex items-center gap-1 font-medium"
+                  style={{ color: theme === 'dark' ? '#38BDF8' : '#0369A1' }}
+                >
+                  <span>{t.hero.reportLink}</span>
+                  <ExternalLink className="w-3 h-3 shrink-0" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ezio9650965/AEGIS-2.1v-overview.git"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline inline-flex items-center gap-1"
+                >
+                  <span>{t.nav.githubSpec}</span>
+                  <ExternalLink className="w-3 h-3 shrink-0" />
+                </a>
+              </li>
               <li><span className="font-mono text-[11px] text-emerald-500 font-bold">{socStatusLabel}</span></li>
             </ul>
           </div>
