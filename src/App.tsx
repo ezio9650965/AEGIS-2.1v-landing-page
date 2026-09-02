@@ -11,6 +11,7 @@ import { ZeroTrustModel } from './components/ZeroTrustModel';
 import { EmployeeExperience } from './components/EmployeeExperience';
 import { OnboardingWalkthrough } from './components/OnboardingWalkthrough';
 import { ServiceTiering } from './components/ServiceTiering';
+import { SOCArchitecture } from './components/SOCArchitecture';
 import { InstallationSteps } from './components/InstallationSteps';
 import { QASection } from './components/QASection';
 import { Footer } from './components/Footer';
@@ -170,14 +171,21 @@ function MainApp() {
 
         <SectionDivider />
 
-        {/* Section 10: Installation / Integration Phased Roadmap */}
+        {/* Section 10: SOC & Operational Architecture */}
+        <FadeInSection>
+          <SOCArchitecture />
+        </FadeInSection>
+
+        <SectionDivider />
+
+        {/* Section 11: Installation / Integration Phased Roadmap */}
         <FadeInSection>
           <InstallationSteps onOpenDemoModal={handleOpenDemoModal} />
         </FadeInSection>
 
         <SectionDivider />
 
-        {/* Section 11: Business & Security FAQ */}
+        {/* Section 12: Business & Security FAQ */}
         <FadeInSection>
           <QASection onOpenDemoModal={handleOpenDemoModal} />
         </FadeInSection>
@@ -185,7 +193,7 @@ function MainApp() {
 
       <SectionDivider />
 
-      {/* Section 12: Footer / Contact */}
+      {/* Section 13: Footer / Contact */}
       <div className="relative z-10">
         <FadeInSection>
           <Footer />

@@ -168,6 +168,161 @@ export interface UIContent {
       highlight?: boolean;
     }[];
   };
+  socArchitecture: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    outcomes: {
+      title: string;
+      lead: string;
+      points: {
+        title: string;
+        description: string;
+      }[];
+      chart: {
+        title: string;
+        subtitle: string;
+        tabResponseTime: string;
+        tabResolutionTrends: string;
+        tabThreatDensity?: string;
+        layoutStacked?: string;
+        layoutSplit?: string;
+        legendTooltipHint?: string;
+        legendModalTitle?: string;
+        threatDensityLabels?: {
+          title?: string;
+          subtitle?: string;
+          heatmapTitle?: string;
+          networkSegment?: string;
+          timeWindows?: string[];
+          legend?: string;
+          legendNominal?: string;
+          legendElevated?: string;
+          legendHigh?: string;
+          legendCritical?: string;
+          filterAll?: string;
+          densityMetric?: string;
+          eventsCount?: string;
+          blockedCount?: string;
+          inspectedSegment?: string;
+          statusOptimal?: string;
+          statusActiveMitigation?: string;
+          densityTrendChart?: string;
+          activeThreatVector?: string;
+          autonomousMitigation?: string;
+          latency?: string;
+          blocked?: string;
+          honeypots?: string;
+          densityRate?: string;
+          blockedAttacks?: string;
+          segments?: {
+            id: string;
+            name: string;
+            desc: string;
+            agents: string;
+            containment: string;
+          }[];
+        };
+        kpis: {
+          label: string;
+          value: string;
+          subtext: string;
+          highlight?: boolean;
+        }[];
+        responseTimeLabels: {
+          mttd: string;
+          mttc: string;
+          slaTarget: string;
+          industryAvg: string;
+          unit: string;
+        };
+        resolutionTrendsLabels: {
+          rawAlerts: string;
+          noiseFiltered: string;
+          realIncidents: string;
+          resolvedSLA: string;
+          unit: string;
+        };
+        months: string[];
+      };
+    };
+    pipeline: {
+      title: string;
+      subtitle: string;
+      layers: {
+        stepNumber: string;
+        name: string;
+        role: string;
+        description: string;
+        engineeringFocusLabel: string;
+        engineeringFocus: string;
+      }[];
+    };
+    containmentStrategy: {
+      badge: string;
+      title: string;
+      lead: string;
+      deliberateTrustNote: string;
+      cards: {
+        type: 'automated' | 'gated';
+        tag: string;
+        title: string;
+        description: string;
+        rationale: string;
+      }[];
+    };
+    predictiveRisk: {
+      badge: string;
+      title: string;
+      subtitle: string;
+      scenarioSelectLabel: string;
+      scenarios: {
+        id: string;
+        name: string;
+        vector: string;
+        target: string;
+        proactiveContainmentTime: string;
+        reactiveBreachTime: string;
+        blastRadiusReduction: string;
+        stages: {
+          phase: string;
+          timeLabel: string;
+          unmitigatedRisk: number;
+          proactiveRisk: number;
+          description: string;
+          proactiveAction: string;
+        }[];
+      }[];
+      proactiveVsReactive: {
+        proactiveTitle: string;
+        proactiveDescription: string;
+        reactiveTitle: string;
+        reactiveDescription: string;
+      };
+      metrics: {
+        label: string;
+        value: string;
+        detail: string;
+      }[];
+    };
+    socSecurity: {
+      badge: string;
+      title: string;
+      lead: string;
+      pillars: {
+        title: string;
+        description: string;
+      }[];
+    };
+    honestyCallout: {
+      title: string;
+      subtitle: string;
+      items: {
+        title: string;
+        description: string;
+      }[];
+    };
+  };
   installation: {
     badge: string;
     title: string;

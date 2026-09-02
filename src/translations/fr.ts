@@ -743,6 +743,354 @@ export const frContent: UIContent = {
       }
     ]
   },
+  socArchitecture: {
+    badge: 'ARCHITECTURE OPÉRATIONNELLE & SOC',
+    title: 'Conçue pour des Résultats Réels, Pas Seulement le Temps de Fonctionnement',
+    subtitle: 'Une vue transparente sur notre pipeline de détection en 3 couches, notre doctrine de confinement maîtrisé et les contrôles Zero-Trust internes protégeant le SOC lui-même.',
+    outcomes: {
+      title: 'Conçu pour des Résultats Concrets, Pas Seulement la Disponibilité',
+      lead: 'Ce que nos clients achètent réellement n’est pas un empilement d’outils logiciels (les moteurs de détection, de corrélation et les flux de cyber-veille sont largement accessibles). Vous achetez moins de fausses alertes, une présence humaine vigilante lorsque vos équipes sont absentes, et des délais d’intervention définis contractuellement plutôt qu’une promesse vague.',
+      points: [
+        {
+          title: 'Ratio Signal-sur-Bruit Drastique',
+          description: 'Nous ne mesurons pas notre valeur au volume brut d’alertes collectées, mais au bruit éliminé avant qu’il n’atteigne les écrans de vos équipes.'
+        },
+        {
+          title: 'Vigilance Humaine Continue',
+          description: 'De vrais analystes seniors surveillent la télémétrie 24/7/365, garantissant qu’un incident survenant un jour férié à 3h du matin est traité avec la même rigueur qu’en plein jour.'
+        },
+        {
+          title: 'Engagements de SLA Contractuels',
+          description: 'Des délais de qualification et de confinement opposables et inscrits au contrat, remplaçant les discours marketing par une responsabilité opérationnelle réelle.'
+        }
+      ],
+      chart: {
+        title: 'Performance Empirique du SOC & Tendances de Résolution',
+        subtitle: 'Indicateurs réels comparant les délais de qualification et de confinement AEGIS aux plafonds SLA contractuels et aux moyennes du secteur.',
+        tabResponseTime: 'Délais de Détection & Confinement (Minutes)',
+        tabResolutionTrends: 'Résolution des Incidents & Suppression du Bruit',
+        tabThreatDensity: 'Densité des Menaces en Temps Réel (Segments Réseau)',
+        layoutStacked: 'Vue Empilée (Optimisée Mobile)',
+        layoutSplit: 'Tableau de Bord Divisé',
+        legendTooltipHint: 'Survolez ou touchez une métrique pour afficher les définitions détaillées & standards SLA',
+        legendModalTitle: 'Définition de la Métrique & Standard Opérationnel SOC',
+        kpis: [
+          { label: 'MTTA (Prise en charge)', value: '< 45s', subtext: 'SLA Contractuel : 5 min', highlight: true },
+          { label: 'MTTD (Temps de Détection)', value: '2,4 min', subtext: 'Moyenne Secteur : 45 min' },
+          { label: 'MTTC (Temps de Confinement)', value: '4,1 min', subtext: 'SLA Contractuel : 15 min', highlight: true },
+          { label: 'Filtrage des Faux Positifs', value: '99,4%', subtext: 'Bruit éliminé avant l’analyste' }
+        ],
+        responseTimeLabels: {
+          mttd: 'MTTD AEGIS (Détection)',
+          mttc: 'MTTC AEGIS (Confinement)',
+          slaTarget: 'Plafond SLA Contractuel',
+          industryAvg: 'Moyenne Standard de l’Industrie',
+          unit: 'Minutes'
+        },
+        resolutionTrendsLabels: {
+          rawAlerts: 'Télémétrie brute collectée (x100)',
+          noiseFiltered: 'Bruit supprimé par les règles (x100)',
+          realIncidents: 'Incidents vérifiés traités',
+          resolvedSLA: 'Incidents confinés dans le SLA',
+          unit: 'Événements'
+        },
+        threatDensityLabels: {
+          title: 'Matrice de Densité des Menaces par Segment Réseau',
+          subtitle: 'Télémétrie en temps réel illustrant la densité d’anomalies, les déclenchements de leurres (honeypots) et le taux de confinement automatisé par segment sur 24 heures.',
+          legendNominal: 'Nominal (0-20%)',
+          legendElevated: 'Élevé (21-50%)',
+          legendHigh: 'Critique Modéré (51-80%)',
+          legendCritical: 'Vecteur d’Attaque Critique (81-100%)',
+          filterAll: 'Tous les Segments',
+          densityMetric: 'Indice de Densité de Menace',
+          eventsCount: 'Événements de Télémétrie / Heure',
+          blockedCount: 'Blocages Automatiques en Bordure',
+          inspectedSegment: 'Télémétrie Détaillée du Segment',
+          statusOptimal: 'Optimal / Aucune Menace Active',
+          statusActiveMitigation: 'Atténuation Active en Cours',
+          timeWindows: ['00h00 - 04h00', '04h00 - 08h00', '08h00 - 12h00', '12h00 - 16h00', '16h00 - 20h00', '20h00 - 24h00'],
+          segments: [
+            { id: 'edge', name: 'Bordure Ingress & DMZ', desc: 'Reverse proxy Traefik, limitation de débit WAF et filtrage GeoIP', agents: '12 Nœuds Edge', containment: '100% Automatique (< 2s)' },
+            { id: 'iam', name: 'Identité & Accès (IAM)', desc: 'Keycloak OIDC, 2FA Authelia et authentification matérielle WebAuthn', agents: '8 Clusters Auth', containment: '99,8% Révocation Immédiate' },
+            { id: 'k8s', name: 'Workloads Kubernetes', desc: 'Pods de microservices, contrôleurs d’ingress et maillage de services', agents: '64 Sondes Pods', containment: 'Contrôlé + Isolation Automatique' },
+            { id: 'db', name: 'Bases de Données & Secrets', desc: 'Clusters PostgreSQL, coffre-fort Vault et stockage d’audit froid', agents: '16 Garde-fous DB', containment: 'Validation Humaine Requise' },
+            { id: 'endpoints', name: 'Terminaux Collaborateurs & VPN', desc: 'Postes clients Zero Trust LAN, agents EDR Wazuh et Sysmon', agents: '280+ Terminaux', containment: 'Quarantaine Réseau Immédiate' },
+            { id: 'cicd', name: 'Chaîne CI/CD & DevOps', desc: 'Exécuteurs de build, registres de conteneurs et workers éphémères', agents: '24 Runners', containment: 'Destruction Automatisée' }
+          ]
+        },
+        months: ['Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mar']
+      }
+    },
+    pipeline: {
+      title: 'Trois Couches, Une Seule Mission Chacune',
+      subtitle: 'Un pipeline de détection et de réponse strictement séquentiel, conçu pour éliminer les faux positifs et garantir une validation rigoureuse des preuves.',
+      layers: [
+        {
+          stepNumber: '01',
+          name: 'Ingestion & Preuves Forensiques',
+          role: 'Registre Durable, Immuable et Horodaté',
+          description: 'Chaque événement arrive ici en premier, indexé et horodaté — le registre durable, inaltéré.',
+          engineeringFocusLabel: 'Mission Première :',
+          engineeringFocus: 'Intégrité forensique absolue sur les logs Sysmon, Wazuh, Traefik et les événements d’authentification, sans aucune perte de trame.'
+        },
+        {
+          stepNumber: '02',
+          name: 'Détection & Corrélation',
+          role: 'Transformation des Données Brutes en Décisions',
+          description: 'Les événements bruts deviennent des décisions. C’est ici que se concentre l’effort d’ingénierie, car la qualité de détection EST le produit — une règle bruyante qui se déclenche sur une activité inoffensive est pire que l’absence de règle, car elle apprend aux analystes à ignorer le tableau de bord.',
+          engineeringFocusLabel: 'Priorité d’Ingénierie :',
+          engineeringFocus: 'Règles de corrélation comportementale à haute fidélité pour supprimer la fatigue informationnelle et éviter la désensibilisation des équipes.'
+        },
+        {
+          stepNumber: '03',
+          name: 'Renseignement & Réponse',
+          role: 'Enrichissement Contextuel & Action Validée',
+          description: 'Enrichissement par rapport aux renseignements réels sur les menaces, puis passage à l’action — délibérément placé en dernier dans la séquence, pour que rien n’agisse avant d’avoir été à la fois détecté ET confirmé comme une menace authentique.',
+          engineeringFocusLabel: 'Séquence Maîtrisée :',
+          engineeringFocus: 'Validation croisée multi-sources (bases IOC, MISP) avant l’exécution de tout flux de confinement actif.'
+        }
+      ]
+    },
+    containmentStrategy: {
+      badge: 'DOCTRINE DE CONFINEMENT',
+      title: 'Pourquoi Nous Ne Répondons Pas Automatiquement à Tout',
+      lead: 'Une réponse entièrement autonome fait forte impression en démonstration mais constitue une vulnérabilité majeure en production — un automate isolant la base de données de production d’un client sur un faux positif provoque la panne exacte qu’il était censé éviter.',
+      deliberateTrustNote: 'Notre doctrine : automatiser les scénarios bien délimités et à faible risque ; soumettre à la confirmation d’un analyste humain toute action touchant les systèmes critiques en production, quitte à accepter quelques minutes de délai de réponse. Il s’agit d’un choix délibéré de confiance, non d’une contrainte technique.',
+      cards: [
+        {
+          type: 'automated',
+          tag: 'Exécution Autonome en < 5s',
+          title: 'Confinement Automatisé à Faible Risque',
+          description: 'Ciblé strictement sur les identifiants discrets et réversibles : révocation immédiate du jeton de session d’un utilisateur compromis sur Keycloak/Authelia, verrouillage du compte et blocage des adresses IP d’attaque en bordure Traefik.',
+          rationale: 'Neutralise le vol d’identifiants sur-le-champ sans risquer de compromettre la disponibilité des services applicatifs métiers.'
+        },
+        {
+          type: 'gated',
+          tag: 'Validation par Analyste Humain',
+          title: 'Confinement Contrôlé des Systèmes Critiques',
+          description: 'Toute intervention affectant des bases de données de production, l’isolement complet de serveurs physiques, des hyperviseurs ou des applications stratégiques requiert la vérification et l’approbation d’un analyste.',
+          rationale: 'Garantit qu’une métrique atypique ou un comportement anormal ne provoque pas d’interruption de service auto-infligée.'
+        }
+      ]
+    },
+    predictiveRisk: {
+      badge: 'MODÉLISATION PRÉDICTIVE DES MENACES',
+      title: 'Interception Précoce Proactive vs. Réaction d’Urgence',
+      subtitle: 'Simulez l’escalade de micro-anomalies initiales vers une compromission critique, et visualisez comment la corrélation prédictive AEGIS neutralise l’attaque avant tout mouvement latéral.',
+      scenarioSelectLabel: 'Scénario d’Escalade de Menace :',
+      scenarios: [
+        {
+          id: 'credential-lateral',
+          name: 'Vol d’Identifiants & Mouvement Latéral',
+          vector: 'Accès VPN Compromis -> Kerberoasting -> Admin de Domaine',
+          target: 'Active Directory & Stockage Partagé d’Entreprise',
+          proactiveContainmentTime: '3,4 min (Avant Pivot Latéral)',
+          reactiveBreachTime: '72 min (Prise de Contrôle Totale)',
+          blastRadiusReduction: '97,5% de Réduction du Périmètre Touché',
+          stages: [
+            {
+              phase: '1. Reconnaissance',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 12,
+              proactiveRisk: 8,
+              description: 'Authentification inhabituelle hors horaires avec empreinte ASN divergente.',
+              proactiveAction: 'Anomalie marquée ; vérification de posture par défi WebAuthn matériel.'
+            },
+            {
+              phase: '2. Accès Initial',
+              timeLabel: 'T + 05m',
+              unmitigatedRisk: 34,
+              proactiveRisk: 10,
+              description: 'Balayage de ports internes ciblant les services d’authentification Kerberos/LDAP.',
+              proactiveAction: 'Détection comportementale déclenchée ; déploiement de leurres (honeypots).'
+            },
+            {
+              phase: '3. Mouvement Latéral',
+              timeLabel: 'T + 18m',
+              unmitigatedRisk: 68,
+              proactiveRisk: 4,
+              description: 'Requêtes de tickets TGS avec chiffrement faible RC4.',
+              proactiveAction: 'Révocation de session sous 5s ; isolement du point d’entrée réseau.'
+            },
+            {
+              phase: '4. Compromission de Domaine',
+              timeLabel: 'T + 42m',
+              unmitigatedRisk: 92,
+              proactiveRisk: 0,
+              description: 'Pass-the-Hash vers le contrôleur de domaine ; suppression des sauvegardes VSS.',
+              proactiveAction: 'Menace neutralisée avant tout accès au contrôleur de domaine ; aucune élévation de privilège.'
+            },
+            {
+              phase: '5. Exfiltration de Données',
+              timeLabel: 'T + 72m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Déploiement du rançongiciel et fuite des données confidentielles.',
+              proactiveAction: 'Rapport d’investigation généré ; plan de remédiation définitive transmis.'
+            }
+          ]
+        },
+        {
+          id: 'ransomware-staging',
+          name: 'Préparation de Rançongiciel & Vivre sur le Terrain (LOLBAS)',
+          vector: 'Payload de Phishing -> PowerShell LOLBAS -> Purge Shadow Copies',
+          target: 'Clusters de Bases de Données & Serveurs de Fichiers',
+          proactiveContainmentTime: '4,1 min (Bloqué au Stage)',
+          reactiveBreachTime: '55 min (Données Chiffrées)',
+          blastRadiusReduction: '99,1% de Réduction du Périmètre Touché',
+          stages: [
+            {
+              phase: '1. Exécution',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 18,
+              proactiveRisk: 12,
+              description: 'Exécution PowerShell obfusquée depuis un répertoire temporaire.',
+              proactiveAction: 'La journalisation Sysmon identifie l’appel API suspect en mémoire.'
+            },
+            {
+              phase: '2. Persistance',
+              timeLabel: 'T + 08m',
+              unmitigatedRisk: 42,
+              proactiveRisk: 9,
+              description: 'Création d’une tâche planifiée et modification des clés de registre.',
+              proactiveAction: 'L’agent gèle l’arborescence du processus ; extraction de la mémoire forensique.'
+            },
+            {
+              phase: '3. Évasion de Défense',
+              timeLabel: 'T + 22m',
+              unmitigatedRisk: 75,
+              proactiveRisk: 2,
+              description: 'Tentative de coupure de l’agent de sécurité et suppression des clichés instantanés.',
+              proactiveAction: 'Microsegmentation active ; quarantaine immédiate de la machine du sous-réseau.'
+            },
+            {
+              phase: '4. Chiffrement de Masse',
+              timeLabel: 'T + 40m',
+              unmitigatedRisk: 95,
+              proactiveRisk: 0,
+              description: 'Chiffrement multi-threadé des disques locaux et répertoires partagés.',
+              proactiveAction: 'Zéro fichier chiffré ; communication avec le serveur C2 interrompue.'
+            },
+            {
+              phase: '5. Demande de Rançon',
+              timeLabel: 'T + 55m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Affichage de la note d’extorsion ; canal secondaire de fuite activé.',
+              proactiveAction: 'Attaque anéantie ; intégrité et continuité d’activité préservées à 100%.'
+            }
+          ]
+        },
+        {
+          id: 'supply-chain-container',
+          name: 'Chaîne d’Approvisionnement CI/CD & Évasion de Conteneur',
+          vector: 'Dépendance NPM Malveillante -> Abus du Jeton de Service K8s',
+          target: 'Cluster Cloud de Production & Coffre-fort de Secrets',
+          proactiveContainmentTime: '2,8 min (Avant Pivot Kubelet)',
+          reactiveBreachTime: '38 min (Coffre de Secrets Vidé)',
+          blastRadiusReduction: '98,8% de Réduction du Périmètre Touché',
+          stages: [
+            {
+              phase: '1. Ingestion',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 15,
+              proactiveRisk: 10,
+              description: 'Balise sortante HTTP depuis un worker CI vers une IP inhabituelle.',
+              proactiveAction: 'Le pare-feu Traefik bloque le trafic sortant non autorisé.'
+            },
+            {
+              phase: '2. Sondage de Privilèges',
+              timeLabel: 'T + 04m',
+              unmitigatedRisk: 48,
+              proactiveRisk: 8,
+              description: 'Utilisation du jeton de service pour interroger l’API Kubernetes.',
+              proactiveAction: 'Violation RBAC stoppée ; pod immédiatement détruit.'
+            },
+            {
+              phase: '3. Évasion d’Hôte',
+              timeLabel: 'T + 14m',
+              unmitigatedRisk: 80,
+              proactiveRisk: 1,
+              description: 'Exploitation d’une faille du noyau pour s’échapper du conteneur.',
+              proactiveAction: 'Isolement du nœud déclenché ; politiques de runtime empêchent le pivot.'
+            },
+            {
+              phase: '4. Fuite des Secrets',
+              timeLabel: 'T + 28m',
+              unmitigatedRisk: 96,
+              proactiveRisk: 0,
+              description: 'Extraction massive des identifiants Vault et clés d’accès cloud.',
+              proactiveAction: 'Aucun secret de production exposé ; rotation automatisée des clés.'
+            },
+            {
+              phase: '5. Prise de Contrôle Cloud',
+              timeLabel: 'T + 38m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Compromission totale du compte cloud et déploiement de mineurs.',
+              proactiveAction: 'Incident circonscrit au runner CI jetable ; production intacte.'
+            }
+          ]
+        }
+      ],
+      proactiveVsReactive: {
+        proactiveTitle: 'Interception Proactive AEGIS',
+        proactiveDescription: 'Les signaux faibles comportementaux neutralisent les attaques dès les phases 1 à 3 avant tout ancrage latéral ou impact destructeur.',
+        reactiveTitle: 'Défense Réactive Traditionnelle',
+        reactiveDescription: 'Les alertes ne se déclenchent qu’au moment du sinistre (chiffrement, fuite), transformant la protection en cellule de crise coûteuse.'
+      },
+      metrics: [
+        {
+          label: 'Réduction Moyenne du Périmètre Touché',
+          value: '98,4%',
+          detail: 'Confiné au terminal d’origine sans propagation latérale'
+        },
+        {
+          label: 'Délai d’Interception Pré-Escalade',
+          value: '< 4,2 min',
+          detail: 'Avant toute élévation de privilèges administrateur'
+        },
+        {
+          label: 'Interruption Métier Évitée',
+          value: '100%',
+          detail: 'Aucun arrêt forcé de base de données ou serveur de production'
+        }
+      ]
+    },
+    socSecurity: {
+      badge: 'SÉCURITÉ INTERNE DU SOC',
+      title: 'La Sécurité du SOC Lui-Même',
+      lead: 'Le SOC constitue lui-même une cible de choix — s’il venait à être compromis, un attaquant ne se contenterait pas de lire les alertes, il pourrait les étouffer. La discipline Zero-Trust proposée à nos clients est rigoureusement appliquée en interne.',
+      pillars: [
+        {
+          title: 'MFA Matériel Obligatoire',
+          description: 'L’ensemble des accès analystes et administrateurs est subordonné à des clés matérielles FIDO2/WebAuthn et des sessions à courte durée de vie.'
+        },
+        {
+          title: 'Microsegmentation Réseau Interne',
+          description: 'Cloisonnement étanche entre les nœuds de stockage SIEM, les pipelines d’ingestion, les moteurs de corrélation et les interfaces d’accès clients.'
+        },
+        {
+          title: 'Journaux d’Audit Inaltérables',
+          description: 'Traces d’audit en écriture unique (WORM) empêchant tout composant, même compromis, de réécrire discrètement ou d’effacer son propre historique.'
+        }
+      ]
+    },
+    honestyCallout: {
+      title: 'Ce Que Nous Vous Disons en Toute Franchise',
+      subtitle: 'La véritable crédibilité opérationnelle repose sur la transparence des engagements et des limites.',
+      items: [
+        {
+          title: 'Le logiciel n’est pas le SLA',
+          description: 'La présence humaine qualifiée constitue le véritable engagement de service, et cela représente un engagement opérationnel explicite, indépendant de la technologie.'
+        },
+        {
+          title: 'Redondance et isolation sur mesure',
+          description: 'La redondance et le cloisonnement des données multi-tenants sont dimensionnés pour chaque contrat selon vos exigences réglementaires et de continuité, sans promesse générique uniforme.'
+        }
+      ]
+    }
+  },
   installation: {
     badge: 'GUIDE DE DÉPLOIEMENT & D’INTÉGRATION',
     title: 'Intégration Sans Interruption en 6 Étapes Phrasées',

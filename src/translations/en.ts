@@ -343,6 +343,354 @@ export const enContent: UIContent = {
       }
     ]
   },
+  socArchitecture: {
+    badge: 'SOC & OPERATIONAL ARCHITECTURE',
+    title: 'Engineered for Real-World Security Outcomes',
+    subtitle: 'A transparent look into our 3-layer detection pipeline, dual-track containment philosophy, and the internal Zero-Trust controls protecting the SOC itself.',
+    outcomes: {
+      title: 'Built for Outcomes, Not Just Uptime',
+      lead: 'What clients are actually paying for isn’t the software stack — detection, correlation, and threat-intel tooling are widely available across the industry. What you are buying is fewer false alarms, dedicated human eyes watching when your team is offline, and a contractually defined response time rather than a vague promise.',
+      points: [
+        {
+          title: 'Radical Signal-to-Noise Ratio',
+          description: 'We don’t measure success by the sheer volume of alerts logged. We measure it by the noise eliminated before it ever reaches an engineer’s screen.'
+        },
+        {
+          title: 'Uninterrupted Human Vigilance',
+          description: 'Real senior analysts monitoring telemetry 24/7/365, ensuring incidents occurring at 03:00 AM on a holiday are triaged with the same rigor as midday.'
+        },
+        {
+          title: 'Enforceable Contractual SLAs',
+          description: 'Explicit, legally binding containment and triage timeframes in your contract, replacing marketing claims with operational accountability.'
+        }
+      ],
+      chart: {
+        title: 'Empirical SOC Performance & Resolution Trends',
+        subtitle: 'Live trailing metrics comparing AEGIS triage & containment speed against contractual SLAs and industry averages.',
+        tabResponseTime: 'Response & Triage Time (Minutes)',
+        tabResolutionTrends: 'Incident Resolution & Noise Filtering',
+        tabThreatDensity: 'Live Threat Density Heatmap (Network Segments)',
+        layoutStacked: 'Stacked View (Mobile-Ready)',
+        layoutSplit: 'Split Dashboard',
+        legendTooltipHint: 'Hover or tap any metric to inspect detailed SOC definitions & SLA standards',
+        legendModalTitle: 'Metric Definition & SOC Operational Benchmark',
+        kpis: [
+          { label: 'MTTA (Acknowledge)', value: '< 45s', subtext: 'Contractual SLA: 5m', highlight: true },
+          { label: 'MTTD (Mean Time to Detect)', value: '2.4 min', subtext: 'Industry Avg: 45 min' },
+          { label: 'MTTC (Mean Time to Contain)', value: '4.1 min', subtext: 'Contractual SLA: 15m', highlight: true },
+          { label: 'False-Positive Suppression', value: '99.4%', subtext: 'Noise eliminated before analyst' }
+        ],
+        responseTimeLabels: {
+          mttd: 'AEGIS MTTD (Detection)',
+          mttc: 'AEGIS MTTC (Containment)',
+          slaTarget: 'Contractual SLA Ceiling',
+          industryAvg: 'Industry Benchmark Average',
+          unit: 'Minutes'
+        },
+        resolutionTrendsLabels: {
+          rawAlerts: 'Raw Telemetry / Alerts Ingested (x100)',
+          noiseFiltered: 'Noise Suppressed by Rules (x100)',
+          realIncidents: 'Verified Incidents Triaged',
+          resolvedSLA: 'Incidents Contained Within SLA',
+          unit: 'Events'
+        },
+        threatDensityLabels: {
+          title: 'Live Network Segment Threat Density Matrix',
+          subtitle: 'Real-time telemetry showing detected anomaly density, honeypot triggers, and autonomous containment rate across core enterprise network segments over 24-hour cycles.',
+          legendNominal: 'Nominal (0-20%)',
+          legendElevated: 'Elevated (21-50%)',
+          legendHigh: 'High (51-80%)',
+          legendCritical: 'Critical / Attack Vector (81-100%)',
+          filterAll: 'All Segments',
+          densityMetric: 'Threat Density Index',
+          eventsCount: 'Telemetry Events / Hour',
+          blockedCount: 'Autonomous Edge Blocks',
+          inspectedSegment: 'Inspected Segment Telemetry',
+          statusOptimal: 'Optimal / No Active Breach',
+          statusActiveMitigation: 'Active Threat Mitigation',
+          timeWindows: ['00:00 - 04:00', '04:00 - 08:00', '08:00 - 12:00', '12:00 - 16:00', '16:00 - 20:00', '20:00 - 24:00'],
+          segments: [
+            { id: 'edge', name: 'Edge Ingress & DMZ', desc: 'Traefik reverse proxy, WAF rate limits & GeoIP filtration', agents: '12 Edge Nodes', containment: '100% Autonomous (Sub-2s)' },
+            { id: 'iam', name: 'Identity & Access (IAM)', desc: 'Keycloak OIDC, Authelia 2FA & WebAuthn authentication', agents: '8 Auth Clusters', containment: '99.8% Autonomous Session Kill' },
+            { id: 'k8s', name: 'Kubernetes Workloads', desc: 'Microservice pods, ingress controllers & service mesh', agents: '64 Pod Monitors', containment: 'Gated + Auto-Cordon' },
+            { id: 'db', name: 'Core DB & Persistence', desc: 'PostgreSQL clusters, Vault secrets & cold audit storage', agents: '16 DB Guardrails', containment: 'Human Analyst Gated' },
+            { id: 'endpoints', name: 'Corporate Endpoints & VPN', desc: 'Zero Trust LAN client devices, EDR Wazuh & Sysmon', agents: '280+ Endpoints', containment: 'Autonomous Subnet Quarantine' },
+            { id: 'cicd', name: 'CI/CD & DevOps Pipeline', desc: 'Build runners, container registries & ephemeral workers', agents: '24 Runners', containment: 'Autonomous Ephemeral Kill' }
+          ]
+        },
+        months: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
+      }
+    },
+    pipeline: {
+      title: 'Three Layers, One Job Each',
+      subtitle: 'A strict unidirectional detection and response pipeline designed to eliminate false positives and enforce rigorous evidence verification.',
+      layers: [
+        {
+          stepNumber: '01',
+          name: 'Ingestion & Evidence',
+          role: 'Durable & Immutable Audit Record',
+          description: 'Every event lands here first, indexed and timestamped — the durable record, unaltered.',
+          engineeringFocusLabel: 'Core Mandate:',
+          engineeringFocus: 'Forensic integrity across Sysmon, Wazuh, Traefik edge logs, and authentication events with zero dropped frames.'
+        },
+        {
+          stepNumber: '02',
+          name: 'Detection & Correlation',
+          role: 'Raw Telemetry Transformed into Decisions',
+          description: 'Raw events become decisions. This is where engineering effort concentrates, because detection quality IS the product — a noisy rule that fires on harmless activity is worse than no rule, because it teaches analysts to ignore the dashboard.',
+          engineeringFocusLabel: 'Engineering Focus:',
+          engineeringFocus: 'High-fidelity behavioral correlation rules, eliminating alert fatigue and preventing analyst desensitization.'
+        },
+        {
+          stepNumber: '03',
+          name: 'Intelligence & Response',
+          role: 'Contextual Enrichment & Validated Action',
+          description: 'Enrichment against real threat intelligence, then action — deliberately last in the sequence, so nothing acts until it’s both detected AND confirmed as a genuine threat.',
+          engineeringFocusLabel: 'Deliberate Sequence:',
+          engineeringFocus: 'Multi-source threat feed verification (MISP, IOC databases) before triggering any containment workflow.'
+        }
+      ]
+    },
+    containmentStrategy: {
+      badge: 'CONTAINMENT GOVERNANCE',
+      title: 'Why We Don’t Auto-Respond to Everything',
+      lead: 'Full autonomous response sounds impressive in a demo but is a liability in production — an automated system that isolates a client’s production database on a false positive causes the exact outage it was hired to prevent.',
+      deliberateTrustNote: 'Our approach: automate the well-understood, low-risk cases; gate anything touching production-critical systems through human analyst confirmation, even at the cost of a few minutes of response time. This is a deliberate trust decision, not a technical limitation.',
+      cards: [
+        {
+          type: 'automated',
+          tag: 'Sub-5s Autonomous Execution',
+          title: 'Automated Low-Risk Isolation',
+          description: 'Scoped strictly to discrete, reversible credentials and edge barriers: revoking compromised user session tokens across Keycloak/Authelia, locking hijacked accounts, and blocking scanner IPs at the Traefik edge.',
+          rationale: 'Neutralizes active credential theft instantly without impacting underlying business infrastructure or service availability.'
+        },
+        {
+          type: 'gated',
+          tag: 'Human Analyst Confirmed',
+          title: 'Gated Production Containment',
+          description: 'Any action touching production-critical databases, core server host isolation, hypervisors, or customer-facing application services requires human analyst verification and collaborative authorization.',
+          rationale: 'Guarantees that an anomalous metric or novel payload does not trigger an automated self-inflicted business outage.'
+        }
+      ]
+    },
+    predictiveRisk: {
+      badge: 'PREDICTIVE THREAT ESCALATION MODELING',
+      title: 'Proactive Early Interception vs. Reactive Firefighting',
+      subtitle: 'Simulate how subtle early-stage anomalies escalate into catastrophic enterprise breaches, and how AEGIS predictive correlation intercepts attacks before lateral movement occurs.',
+      scenarioSelectLabel: 'Attack Escalation Scenario:',
+      scenarios: [
+        {
+          id: 'credential-lateral',
+          name: 'Identity Compromise & Lateral Movement',
+          vector: 'Compromised VPN Credential -> Kerberoasting -> Domain Admin',
+          target: 'Active Directory & Corporate Shared Storage',
+          proactiveContainmentTime: '3.4 min (Pre-Lateral Pivot)',
+          reactiveBreachTime: '72 min (Full Domain Takeover)',
+          blastRadiusReduction: '97.5% Blast Radius Reduction',
+          stages: [
+            {
+              phase: '1. Reconnaissance',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 12,
+              proactiveRisk: 8,
+              description: 'Anomalous off-hours authentication with mismatched ASN fingerprint.',
+              proactiveAction: 'Baseline anomaly tagged; device posture verified via WebAuthn challenge.'
+            },
+            {
+              phase: '2. Initial Access',
+              timeLabel: 'T + 05m',
+              unmitigatedRisk: 34,
+              proactiveRisk: 10,
+              description: 'Internal port scan against LDAP/Kerberos service endpoints.',
+              proactiveAction: 'Behavioral detection triggered; synthetic honeypot credentials deployed.'
+            },
+            {
+              phase: '3. Lateral Movement',
+              timeLabel: 'T + 18m',
+              unmitigatedRisk: 68,
+              proactiveRisk: 4,
+              description: 'Ticket-granting service requests (TGS) with weak RC4 encryption.',
+              proactiveAction: 'Proactive session kill & token revocation in sub-5s; edge ingress isolated.'
+            },
+            {
+              phase: '4. Domain Compromise',
+              timeLabel: 'T + 42m',
+              unmitigatedRisk: 92,
+              proactiveRisk: 0,
+              description: 'Pass-the-Hash onto domain controller; shadow copies purged.',
+              proactiveAction: 'Threat neutralized before domain controller contact; zero privilege escalation.'
+            },
+            {
+              phase: '5. Data Exfiltration',
+              timeLabel: 'T + 72m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Ransomware deployment and encrypted backup exfiltration.',
+              proactiveAction: 'Complete incident report generated; root-cause remediation guidance dispatched.'
+            }
+          ]
+        },
+        {
+          id: 'ransomware-staging',
+          name: 'Ransomware Staging & Living-off-the-Land',
+          vector: 'Phishing Payload -> PowerShell LOLBAS -> Shadow Copy Purge',
+          target: 'Database Clusters & File Servers',
+          proactiveContainmentTime: '4.1 min (Staging Blocked)',
+          reactiveBreachTime: '55 min (Data Encrypted)',
+          blastRadiusReduction: '99.1% Blast Radius Reduction',
+          stages: [
+            {
+              phase: '1. Execution',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 18,
+              proactiveRisk: 12,
+              description: 'Obfuscated PowerShell execution from temporary staging folder.',
+              proactiveAction: 'Sysmon script block logging correlation flags malicious API hook.'
+            },
+            {
+              phase: '2. Persistence',
+              timeLabel: 'T + 08m',
+              unmitigatedRisk: 42,
+              proactiveRisk: 9,
+              description: 'Scheduled task creation and registry Run key modification.',
+              proactiveAction: 'Host agent freezes suspicious process tree; memory dump captured for forensics.'
+            },
+            {
+              phase: '3. Defense Evasion',
+              timeLabel: 'T + 22m',
+              unmitigatedRisk: 75,
+              proactiveRisk: 2,
+              description: 'Attempted termination of endpoint AV services and volume shadow copy purge.',
+              proactiveAction: 'Microsegmentation enforces network quarantine; host isolated from subnet.'
+            },
+            {
+              phase: '4. Mass Encryption',
+              timeLabel: 'T + 40m',
+              unmitigatedRisk: 95,
+              proactiveRisk: 0,
+              description: 'Multi-threaded file encryption across local drives and network shares.',
+              proactiveAction: 'Zero files encrypted; encryption keys never negotiated with C2 server.'
+            },
+            {
+              phase: '5. Extortion Note',
+              timeLabel: 'T + 55m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Ransom note displayed; secondary exfiltration channel engaged.',
+              proactiveAction: 'Threat completely eliminated; business continuity unhindered.'
+            }
+          ]
+        },
+        {
+          id: 'supply-chain-container',
+          name: 'CI/CD Supply Chain & Container Escape',
+          vector: 'Malicious NPM Dependency -> Kubernetes Service Token Abuse',
+          target: 'Production Cloud Cluster & Secrets Store',
+          proactiveContainmentTime: '2.8 min (Pre-Kubelet Pivot)',
+          reactiveBreachTime: '38 min (Secrets Store Drained)',
+          blastRadiusReduction: '98.8% Blast Radius Reduction',
+          stages: [
+            {
+              phase: '1. Ingestion',
+              timeLabel: 'T + 00m',
+              unmitigatedRisk: 15,
+              proactiveRisk: 10,
+              description: 'Outbound HTTP beaconing from build worker to anomalous IP.',
+              proactiveAction: 'Traefik edge firewall detects unauthorized egress protocol.'
+            },
+            {
+              phase: '2. Privilege Probe',
+              timeLabel: 'T + 04m',
+              unmitigatedRisk: 48,
+              proactiveRisk: 8,
+              description: 'Mounted service account token used to query Kubernetes API server.',
+              proactiveAction: 'RBAC violation intercepted; pod terminated and ephemeral volume destroyed.'
+            },
+            {
+              phase: '3. Host Escape',
+              timeLabel: 'T + 14m',
+              unmitigatedRisk: 80,
+              proactiveRisk: 1,
+              description: 'Exploitation of kernel vulnerability to escape container namespace.',
+              proactiveAction: 'Node cordon executed; runtime security policies prevent kernel pivot.'
+            },
+            {
+              phase: '4. Secrets Draining',
+              timeLabel: 'T + 28m',
+              unmitigatedRisk: 96,
+              proactiveRisk: 0,
+              description: 'Mass dump of Vault credentials and cloud production access keys.',
+              proactiveAction: 'Zero production secrets exposed; automated token rotation triggered.'
+            },
+            {
+              phase: '5. Infrastructure Takeover',
+              timeLabel: 'T + 38m',
+              unmitigatedRisk: 100,
+              proactiveRisk: 0,
+              description: 'Full cloud organization compromised and crypto-mining deployed.',
+              proactiveAction: 'Incident isolated to throwaway CI runner; production cluster untouched.'
+            }
+          ]
+        }
+      ],
+      proactiveVsReactive: {
+        proactiveTitle: 'AEGIS Proactive Early Interception',
+        proactiveDescription: 'Early behavioral flags suppress attacks in stages 1–3 before adversaries gain lateral foothold or deploy disruptive payloads.',
+        reactiveTitle: 'Traditional Reactive Defense',
+        reactiveDescription: 'Alerts only trigger upon catastrophic impact (mass encryption, exfiltration), turning prevention into costly disaster recovery.'
+      },
+      metrics: [
+        {
+          label: 'Average Blast Radius Mitigation',
+          value: '98.4%',
+          detail: 'Isolated to origin endpoint without lateral pivot'
+        },
+        {
+          label: 'Pre-Escalation Containment',
+          value: '< 4.2 min',
+          detail: 'Before administrative privilege escalation'
+        },
+        {
+          label: 'Business Downtime Avoided',
+          value: '100%',
+          detail: 'No production database or host shutdowns'
+        }
+      ]
+    },
+    socSecurity: {
+      badge: 'INTERNAL ZERO-TRUST CONTROLS',
+      title: 'Security of the SOC Itself',
+      lead: 'The SOC is itself a prime target — if it is compromised, an attacker doesn’t just see alerts, they can quietly suppress them. The same Zero-Trust discipline sold to clients is applied strictly to our own internal architecture.',
+      pillars: [
+        {
+          title: 'Mandatory Hardware MFA',
+          description: 'All analyst and engineer access to the SOC environment requires hardware-backed FIDO2/WebAuthn tokens and strict short-lived session authorization.'
+        },
+        {
+          title: 'Component Network Microsegmentation',
+          description: 'Air-gapped separation between SIEM storage nodes, ingestion pipelines, correlation workers, and client dashboard presentation layers.'
+        },
+        {
+          title: 'Tamper-Evident Audit Logging',
+          description: 'Append-only, immutable write-once audit trails ensuring even a compromised administrative component cannot quietly rewrite or purge history.'
+        }
+      ]
+    },
+    honestyCallout: {
+      title: 'What We Tell You Honestly',
+      subtitle: 'True operational confidence comes from transparency about architectural boundaries.',
+      items: [
+        {
+          title: 'Software is not the SLA',
+          description: 'Staffed human coverage is the actual SLA, and that is an explicit operational commitment, separate from the underlying technology.'
+        },
+        {
+          title: 'Scoped Isolation & Redundancy',
+          description: 'Redundancy and multi-tenant data isolation are scoped per engagement based on your specific compliance and risk requirements, not a generic one-size-fits-all claim.'
+        }
+      ]
+    }
+  },
   installation: {
     badge: 'DEPLOYMENT & INTEGRATION GUIDE',
     title: 'Zero-Disruption Integration in 6 Phased Steps',
